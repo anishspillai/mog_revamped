@@ -1,0 +1,113 @@
+.card-product {
+    transition: .2s;
+    -moz-transition: .2s;
+    -webkit-transition: .2s;
+    -o-transition: .2s
+}
+.card-product .card-hidden {
+    background-color: #fff;
+    border-bottom: 1px solid #e9edec;
+    border-left: 1px solid #e9edec;
+    border-radius: .4375rem;
+    border-right: 1px solid #e9edec;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    left: 0;
+    margin-top: -1.25rem;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    transition: all .15s ease-in-out;
+    visibility: hidden;
+    width: 100%;
+    z-index: 1
+}
+.card-product .product-action-btn {
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateX(10px);
+    transition: opacity .25s cubic-bezier(.17, .62, .44, .99), transform .25s cubic-bezier(.17, .62, .44, .99)
+}
+.card-product .card-product-action {
+    bottom: 15%;
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    transform: translateX(-50%) translateY(-50%);
+    transition: all .3s ease 0s;
+    visibility: hidden;
+    width: 100%;
+    z-index: 9
+}
+.card-product:hover {
+    border: 1px solid #0aad0a;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, .12);
+    transition: .2s;
+    -moz-transition: .2s;
+    -webkit-transition: .2s;
+    -o-transition: .2s
+}
+.card-product:hover .card-hidden,
+.card-product:hover .card-product-action {
+    opacity: 1;
+    visibility: visible
+}
+.card-product:hover .product-action-btn {
+    opacity: 1;
+    transform: translateX(0)
+}
+.card-product .btn-action {
+    align-items: center;
+    background-color: #fff;
+    border-radius: .5rem;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    color: #21313c;
+    display: inline-flex;
+    font-size: 14px;
+    height: 34px;
+    justify-content: center;
+    line-height: 34px;
+    text-align: center;
+    transition: all .3s ease 0s;
+    vertical-align: middle;
+    width: 34px
+}
+.card-product .btn-action:hover {
+    background-color: #0aad0a;
+    color: #fff
+}
+.card-image {
+    transition: box-shadow .25s ease, transform .25s ease
+}
+.card-image:hover {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    transform: translate3d(0, -3px, 0)
+}
+
+
+.grocery-text-style {
+    color: #4d5b6a;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.grocery-text-style:hover {
+    background-color: #b5bfc5;
+    padding: 7px;
+    color: rgb(23, 3, 3);
+    border-radius: .5rem;
+    font-weight: bolder;
+}
+
+input[type=checkbox]{
+    accent-color:#fff !important
+}
+
+.img-size {
+    width: 150px;
+    height: 150px;
+}

@@ -1,0 +1,147 @@
+<nav class="navbar navbar-expand-lg bg-dark sticky-top">
+  <!--Keep it expanded until large screen. Then collide for medium and small screens-->
+  <div class="container-fluid">
+    <a class="navbar-brand text-white col-lg-1" href="#">
+      <img class="image-fluid" src="../assets/img/brand_icon.png" alt="..." height="50" width="50">
+    </a>
+
+
+    <div class="navbar-toggler dropdown">
+      <i class="text-white" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="bi bi-person-fill-gear text-warning h1"></span>
+      </i>
+      <div class="dropdown-menu">
+        <li><a [routerLink]="['g']" class="dropdown-item" data-bs-placement="top" title="User Detail">Contact Details
+          </a></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+
+        <li><a [routerLink]="['fa']" class="dropdown-item" data-bs-placement="top" title="User Detail">Favorite Items
+          </a></li>
+
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+
+        <li><a [routerLink]="['oh']" class="dropdown-item" data-bs-placement="top" title="User Detail">Order History
+          </a></li>
+      </div>
+    </div>
+
+    <div class="navbar-toggler dropdown">
+      <button class=" btn btn-success position-relative" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasRightMobile" aria-controls="offcanvasRightMobile">
+        <i class="bi bi-cart4 h5 px-lg-2"></i> <span class="font-bold-700-open-sans h6">110, 23 Kr</span>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{getCountOfItems()}}
+        </span>
+      </button>
+    </div>
+
+    <button class="navbar-toggler border-light" type="button" data-bs-toggle="offcanvas"
+      data-bs-target="#mobileSideBarDisplay" aria-controls="offcanvasRight" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+
+    <div class="navbar-toggler dropdown">
+      <div class="d-grid">
+        <div class="row">
+          <div class="col-12">
+            <input type="text" size="500" [(ngModel)]="searchString" (ngModelChange)="textInputChange($event)"
+              class="form-control" placeholder="Search in our warehouse for finding warre"
+              aria-label="Recipient's username" aria-describedby="basic-addon2">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="collapse navbar-collapse  justify-content-between">
+
+      <div class="input-group  mr-auto mt-2 mt-lg-0" style="width: 700px">
+        <input type="text" [(ngModel)]="searchString" (ngModelChange)="textInputChange($event)" class="form-control"
+          placeholder="Search in our warehouse" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <i class="btn btn-outline-secondary bi bi-search"></i>
+        </div>
+      </div>
+
+
+
+      <button class="effect effect-2 btn btn-success position-relative" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+        <i class="bi bi-cart4 h5 px-lg-2"></i> <span class="font-bold-700-open-sans h6"> {{getCostOfItemsInCart()}}
+        </span>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{getCountOfItems()}}
+        </span>
+      </button>
+
+      <a [routerLink]="['g']" class="bi bi-person-fill-gear text-info h2" data-bs-toggle="tooltip"
+        data-bs-placement="top" title="User Detail"></a>
+
+      <a [routerLink]="['fa']" class="bi bi-clipboard2-heart-fill text-muted h2" data-bs-toggle="tooltip"
+        data-bs-placement="top" title="User Detail"></a>
+
+      <a [routerLink]="['oh']" class="bi bi-bag-plus-fill text-warning h2" data-bs-toggle="tooltip"
+        data-bs-placement="top" title="Order History"></a>
+
+
+
+
+      <a *ngIf="true" class="nav-link d-flex flex-column align-items-center" data-bs-toggle="tooltip"
+        data-bs-placement="top" title="Please login">
+        <a [routerLink]="['../login']" type="button" class="btn btn-success"
+          style="--bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .60rem;">
+          Log In</a>
+        <small class="text-danger">Hi, Please log in</small>
+      </a>
+
+
+      <a *ngIf="false" class="nav-link d-flex flex-column align-items-center" data-bs-toggle="tooltip"
+        data-bs-placement="top" title="Click to Log out">
+        <button type="button" class="btn btn-danger"
+          style="--bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .60rem;">
+          Log Out</button>
+        <small class="text-muted">Hi ANISH Sasidharan Pillai</small>
+      </a>
+
+    </div>
+  </div>
+</nav>
+
+<div class="offcanvas offcanvas-start w-75" tabindex="-1" id="mobileSideBarDisplay"
+  aria-labelledby="offcanvasExampleLabel" data-bs-scroll="true">
+  <app-side-bar-for-small-devices></app-side-bar-for-small-devices>
+</div>
+
+<div class="offcanvas offcanvas-end w-50 d-none d-lg-block" tabindex="-1" id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title font-bold-700-open-sans h1 text-secondary" id="offcanvasRightLabel">Cart Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <app-view-cart-items-sidebar></app-view-cart-items-sidebar>
+  </div>
+</div>
+
+
+
+<div class="offcanvas offcanvas-end w-100 d-block d-lg-none" tabindex="-1" id="offcanvasRightMobile"
+  aria-labelledby="offcanvasRightMobileLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title font-bold-700-open-sans text-secondary" id="offcanvasRightLabel">Cart Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <app-view-cart-items-sidebar></app-view-cart-items-sidebar>
+  </div>
+</div>
+
+<!-- The routed views render in the <router-outlet>-->
+<router-outlet></router-outlet>

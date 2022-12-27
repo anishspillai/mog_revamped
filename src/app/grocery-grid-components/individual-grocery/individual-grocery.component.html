@@ -1,0 +1,51 @@
+<div class="card card-product col-sm-12">
+    <div class="card-body">
+        <div class="text-center position-relative ">
+            <div class=" position-absolute top-0 start-0">
+                <span class="badge bg-danger">Sale</span>
+            </div>
+            <a href="#!"> <img src="{{individualGrocery?.imagePath}}" alt="Missing Image"
+                    class="mb-3 img-fluid img-size"></a>
+            <div class="card-product-action">
+                <a href="#!" class="btn-action" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i
+                        class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true" title="Quick View"></i></a>
+                <a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true" title="Wishlist"><i
+                        class="bi bi-heart"></i></a>
+                <a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true" title="Compare"><i
+                        class="bi bi-arrow-left-right"></i></a>
+            </div>
+        </div>
+        <div class="text-small mb-1"><a href="#!"
+                class="text-decoration-none text-muted"><small>{{individualGrocery?.brandName}}</small></a></div>
+        <h2 class="fs-6"><a href="#!"
+                class="text-inherit text-dark  text-decoration-none">{{individualGrocery?.type}}</a></h2>
+        <div>
+            <small class="text-warning"> <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-half"></i></small> <span
+                class="text-muted small">{{individualGrocery?.actualPrice}}</span>
+        </div>
+
+        <div><span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
+        </div>
+
+        <div *ngIf="isItemNotAddedIntoTheCartAlready()">
+            <button *ngIf="stockCount() === 0" href="#!" class="btn btn-success btn-sm mt-3"
+                (click)="addItemToTheCart()">
+                Add
+            </button>
+            <a *ngIf="stockCount() > 0" href="#!" class="btn btn-danger btn-sm disabled">Out of stock
+            </a>
+        </div>
+
+        <div *ngIf="!isItemNotAddedIntoTheCartAlready()"
+            class="d-flex justify-content-evenly align-items-center mt-3 mx-sm-1">
+            <i class="bi bi-dash-square-fill h4 btn btn-danger responsive-font"></i>
+            <span class="text-center"> 44 </span>
+            <i class="bi bi-plus-square-fill h4 btn btn-success responsive-font"></i>
+        </div>
+
+    </div>
+</div>

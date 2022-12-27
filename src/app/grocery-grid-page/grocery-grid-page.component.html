@@ -1,0 +1,108 @@
+<div class="mt-2 d-block d-lg-none justify-content-center">
+    Filter and sorting
+</div>
+
+<div class="my-8 mt-5 d-none d-lg-block">
+    <app-grocery-types-top-menu-bar></app-grocery-types-top-menu-bar>
+</div>
+
+<hr class="linear-gradient-hr">
+
+
+<div class="container d-none d-lg-block">
+    <div class="row justify-content-center">
+        <div class="p-4  border col-3 mx-2 border-ligth bg-light shadow-lg position-relative rounded">
+            &nbsp;
+            <span class="position-absolute top-0 start-1 text-muted">
+                <small class="fw-bold" style="font-size:small">Clear Refinements</small>
+            </span>
+            <span class="px-5">
+                <button type="button" class="position-absolute btn btn-dark start-25"
+                    style="left:30px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                    Clear Filters - Work In Progress
+                </button>
+            </span>
+        </div>
+
+        <div class="anish p-4 border col-4 border-ligth bg-light shadow-lg position-relative rounded">
+            &nbsp;
+            <span class="position-absolute top-0 start-1 text-muted">
+                <small class="fw-bold" style="font-size:small">Selected Refinements</small>
+
+                <br>
+
+                <span class="work-in-progress-text">Work In Progress</span>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="row m-3">
+
+    <div *ngIf="isAwaitingPageLoad" class="d-flex justify-content-center">
+        <div class="row">
+            <div class="spinner-border" role="status">
+                <strong>Loading...</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 my-8 mt-5 d-none d-lg-block">
+        <div class="card border-0">
+            <h6 class="card-subtitle mb-2 font-bold-700-open-sans">{{parentGroceryName ? parentGroceryName : 'Others'}}
+            </h6>
+            <div *ngFor="let menu of productCategories">
+                <span class="text-muted px-2">
+                    <span *ngIf="isSubGroceryType"
+                        (click)="navigateToTheGroceryItemClickedByUser(menu, parentGroceryName, true)"
+                        [ngClass]="groceryName === menu ? 'badge text-bg-secondary' : 'text-dark'"><span
+                            class="p-2 grocery-type-side-bar-text-font">{{menu}}</span>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <hr class="linear-gradient-hr">
+
+        <div class="card border-0">
+            <span class="font-bold-700-open-sans">Filter by Brand</span> <span class="work-in-progress-text">Work In Progress</span>
+
+            <span style="margin-left: 10px" *ngFor="let item of brandNamesWithCountMap | keyvalue">
+                <div class="form-check">
+                    <input class="form-check-input" 
+                    type="checkbox" 
+                    value="" 
+                    id="flexCheckDefault"
+                        (change)="addUserSelectedCheckBoxNameToChildView(item.key)">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <span class="grocery-type-side-bar-text-font">{{item.key}} </span> <span class="badge bg-success">{{item.value}}</span>
+                    </label>
+                </div>
+            </span>
+        </div>
+
+        <hr class="linear-gradient-hr">
+
+        <div class="card border-0 mt-lg-3">
+            <span class="font-bold-700-open-sans">Filter by price</span>
+            <span class="work-in-progress-text">Work In Progress</span>
+            <ul class="d-grid p-1 m-0  grocery-type-side-bar-text-font">
+                <li class="list-group-item small"><span class="grocery-text-style m-2">10 Kr</span></li>
+                <li class="list-group-item small"><span class="grocery-text-style m-2">30 Kr</span></li>
+                <li class="list-group-item small"><span class="grocery-text-style m-2">100Kr</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-10">
+        <div class="container">
+            <div class="row row-cols-lg-5 row-cols-2 row-cols-md-3 mt-lg-5">
+                <div *ngFor="let grocery of groceryList | paginate: { itemsPerPage: 15, currentPage: p }">
+                    <app-individual-grocery [individualGrocery]="grocery"></app-individual-grocery>
+                </div>
+            </div>
+            <div class="m-4">
+                <pagination-controls [responsive]="true" (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

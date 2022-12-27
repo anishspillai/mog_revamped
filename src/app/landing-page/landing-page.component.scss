@@ -1,0 +1,15 @@
+a.bi:hover {
+  color: #9e2c3b !important;
+  transform: translateY(-0.25rem);
+  box-shadow: 0px 3px 15px rgba(225, 222, 222, 0.2);
+}
+
+.navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(239, 9, 128, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  font-weight:bolder
+}
+
+.btn-success:hover {
+  transform: translateY(-3px);
+  box-shadow: 5px 4px 17px rgba(229, 224, 224, 0.35);
+}

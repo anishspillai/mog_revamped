@@ -1,0 +1,91 @@
+<!--ais-instantsearch [config]="{
+    indexName: 'groceries',
+    searchClient: searchClient
+}">
+
+<ais-search-box></ais-search-box>
+<ais-hits>
+  <ng-template let-hits="hits">
+    <ol class="ais-Hits-list">
+      <li *ngFor="let hit of hits" class="ais-Hits-item">
+       {{hit.brandName}}
+      </li>
+    </ol>
+  </ng-template>
+</ais-hits>
+
+<ais-stats>
+    <ng-template let-state="state">
+      {{state?.nbHits}} results found in {{state?.processingTimeMS}}ms.
+    </ng-template>
+  </ais-stats>
+</ais-instantsearch-->
+
+
+<!--ais-instantsearch [config]="{
+        indexName: 'groceries',
+        searchClient: searchClient
+      }">
+  <div class="left-panel">
+    <ais-clear-refinements></ais-clear-refinements>
+    <h2>Brands</h2>
+    <ais-refinement-list attribute="brand"></ais-refinement-list>
+    <ais-configure [searchParameters]="{ hitsPerPage: 8 }"></ais-configure>
+  </div>
+  <div class="right-panel">
+    <ais-search-box placeholder="This is the place holder" query="anish s pillai"></ais-search-box>
+    <ais-hits>
+      <ng-template let-hits="hits">
+        <ol class="ais-Hits-list">
+          <li *ngFor="let hit of hits" class="ais-Hits-item">
+            {{hit.brandName}}
+          </li>
+        </ol>
+      </ng-template>
+    </ais-hits>
+    <ais-pagination></ais-pagination>
+  </div>
+</ais-instantsearch-->
+
+<div class="d-none d-lg-block">
+  <app-grocery-types-top-menu-bar></app-grocery-types-top-menu-bar>
+</div>
+
+<div *ngIf="isAwaitingPageLoad" class="d-flex justify-content-center">
+  <div class="row">
+    <div class="spinner-border" role="status">
+      <strong>Loading...</strong>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="paginationConfigParameers.totalItems > 0" class="container">
+  <div class="text-center">
+    <span class="text-muted px-3">Total Hits found for - <strong class="text-dark">{{searchString}}:</strong></span>
+    <span class="text-secondary fw-bolder">{{paginationConfigParameers.totalItems}}
+    </span>
+  </div>
+  <div class="row row-cols-lg-5 row-cols-2 row-cols-md-3 mt-5">
+    <div *ngFor="let grocery of filteredGroceryList | paginate:  paginationConfigParameers" class="col">
+
+      <app-individual-grocery [individualGrocery]="grocery"></app-individual-grocery>
+    </div>
+  </div>
+  <div class="m-4 align-content-center">
+    <pagination-controls [responsive]="true" (pageChange)="fetchNextPage($event)"></pagination-controls>
+  </div>
+</div>
+<div *ngIf="this.paginationConfigParameers.totalItems === 0" class="container">
+  <span class="g-2 py-5 px-3 text-danger badge"> No Items found </span>
+</div>
+
+
+
+<!--
+https://stackoverflow.com/questions/64877668/customize-algolias-search-box-in-angular
+https://community.algolia.com/instantsearch.js/v2/guides/angular-integration.html#install-instantsearchjs
+
+https://www.google.com/search?q=navigate+to+new+page+on+search+input+angular&rlz=1C5GCEM_enSE999SE999&sxsrf=ALiCzsYSJYMt1gwHC5TpdrlnIpCqAHOxFg%3A1671709568687&ei=gEOkY-LMKY-F8gKb5bXgCQ&oq=navigate+to+new+page+on+search&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAxgAMgUIIRCgATIFCCEQoAEyCAghEBYQHhAdOggIABCGAxCwAzoECCMQJzoFCAAQgAQ6BggAEBYQHjoFCAAQhgM6BAghEBU6BwghEKABEApKBAhBGAFKBAhGGABQ0GpYy4YBYKuQAWgEcAB4AIABkwGIAeAJkgEDMi45mAEAoAEByAECwAEB&sclient=gws-wiz-serp
+https://stackoverflow.com/questions/48992002/angular2-5-search-a-database-and-display-results-on-new-page
+https://stackoverflow.com/questions/51817027/how-to-dynamically-change-search-parameter-in-angular-algolia-instant-search
+-->

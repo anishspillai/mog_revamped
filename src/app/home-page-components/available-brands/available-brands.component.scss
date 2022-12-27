@@ -1,0 +1,55 @@
+@media (max-width: 767px) {
+    .carousel-inner .carousel-item>div {
+        //border: none;
+    }
+
+    .carousel-inner .carousel-item>div:first-child {
+         //border: none;
+    }
+
+    .carousel-inner .carousel-item .div .div >.card {
+         border: none;
+    }
+
+    .card {
+        border: none;
+        padding: 5px;
+        background-color: none;
+    }
+    .img {
+        height: 50px;
+        width: 50px;
+    }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* medium and up screens */
+@media (min-width: 768px) {
+
+    .carousel-inner .carousel-item-end.active,
+    .carousel-inner .carousel-item-next {
+        transform: translateX(25%);
+    }
+
+    .carousel-inner .carousel-item-start.active,
+    .carousel-inner .carousel-item-prev {
+        transform: translateX(-25%);
+    }
+}
+
+.carousel-inner .carousel-item-end,
+.carousel-inner .carousel-item-start {
+    transform: translateX(0);
+}
+
+.img-center {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: none;
+  }

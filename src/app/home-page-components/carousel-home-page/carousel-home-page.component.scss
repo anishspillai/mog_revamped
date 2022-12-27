@@ -1,0 +1,38 @@
+.carousel .carousel-control-prev {
+    opacity: .8;
+    background-color: gray;
+    width: 5%;
+    height: 500px;
+    align-items: center;
+    bottom: 0;
+    left: -40px;
+}
+
+.carousel .carousel-control-next {
+    opacity: .8;
+    background-color: gray;
+    width: 5%;
+    height: 500px;
+    align-items: center;
+    bottom: 0;
+    right: -40px;
+}
+
+.carousel .carousel-control-prev:hover,
+.carousel .carousel-control-next:hover {
+    opacity: 1;
+    background-color: rgb(23, 20, 21);
+    width: 5%;
+
+    transform: translateY(-3px);
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+}
+
+.hidden {
+    display: none;
+}
+
+.carousel:hover .hidden {
+    display: block;
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+}

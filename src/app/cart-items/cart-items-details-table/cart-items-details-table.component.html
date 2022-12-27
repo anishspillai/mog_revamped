@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <table class="table table-striped">
+    <thead class="border-bottom border-3 border-secondary">
+      <tr *ngIf="!displayStockDecreamentOrIncreamentButton">
+        <th scope="col">Item</th>
+        <th scope="col">Item Details</th>
+        <th scope="col">Cost</th>
+      </tr>
+    </thead>
+    <tbody class="grocery-type-side-bar-text-font">
+      <tr class="align-items-center" *ngFor="let orderedItem of ordersAddedByUser">
+
+        <td scope="row"><img src="../assets/img/hello.jpg" class="img-fluid  d-none d-lg-block" style="height: 50px; width: 50px;;">
+        </td>
+
+        <td class="text-dark">{{orderedItem.groceryName}} {{orderedItem.type}} {{orderedItem.subType}} {{orderedItem.grossWeight}} {{orderedItem.unitOfWeight}}<span class="text-danger h6 px-1"> * </span> {{orderedItem.noOfItems}} packets
+        </td>
+
+        <td *ngIf="displayStockDecreamentOrIncreamentButton">
+          <i class="bi bi-dash-square-fill h4 btn btn-danger responsive-font"></i>
+          <span class="mx-lg-2 font-bold-700-open-sans"> {{orderedItem.noOfItems}} </span>
+          <i class="bi bi-plus-square-fill h4 btn btn-success responsive-font"></i>
+        </td>
+
+        <td class="text-dark "> {{orderedItem.actualPrice}} Kr</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
