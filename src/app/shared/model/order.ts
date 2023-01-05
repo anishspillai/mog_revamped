@@ -3,14 +3,14 @@ import { IndividualGrocery } from "../services/individual-grocery";
 export class Order {
     constructor(
         public actualPrice: number = 12,
-        public groceryName: string = "Anish",
+        public brandName: string = "Anish",
         public id: string = "Ansih",
         public imagePath: string = "Anish",
         public timeOfOrder: string = "",
         public type: string = "Wheat",
         public unitOfWeight: string = "Kg",
         public grossWeight: number = 7.5,
-        public noOfItems: number,
+        public quantity: number,
         public maxShoppingIsRestricted = false,
         public maxShoppingCount: number = 7,
         public bulkPurchaseOfferAvailable = false,
@@ -18,8 +18,8 @@ export class Order {
         public bulkPurchaseOfferPrice: number = 78.45,
         public offerPrice: number = 12,
         public subType: string = "",
-        public priceChangeTracker: PriceChangeTracker | undefined,
-        public countChangeTracker: CountChangeTracker | undefined
+        //public priceChangeTracker: PriceChangeTracker | undefined,
+        //public countChangeTracker: CountChangeTracker | undefined
     ) {
     }
 
@@ -41,8 +41,8 @@ export class Order {
             individualGrocery.bulkPurchaseOfferPrice,
             individualGrocery.offerPrice,
             individualGrocery.subType,
-            undefined,
-            undefined
+            //undefined,
+            //undefined
         )
     }
 }

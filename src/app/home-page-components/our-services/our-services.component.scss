@@ -1,0 +1,31 @@
+.services-text-family {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+hr {
+    border: 8px dashed rgb(176, 17, 70);
+    border-radius: 25px;
+}
+
+@media screen and (max-width: 575px) {
+    img {
+        height: 100px;
+        width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .h2 {
+        font-size: large;
+    }
+
+    p {
+        font-size: small!important;
+        color: black!important;
+    }
+
+    h5 {
+        font-size: large;
+    }
+}
+

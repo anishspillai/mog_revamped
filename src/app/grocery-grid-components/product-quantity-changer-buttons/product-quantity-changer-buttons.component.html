@@ -1,0 +1,6 @@
+
+<div class="d-flex justify-content-evenly">
+    <span><button (click)="removeFromCart()" class="btn btn-danger">-</button></span>
+    <span class="font-bold-700-open-sans">{{ shoppingCart.getQuantity(product) }}</span>
+    <button (click)="addToCart()" class="btn btn-success">+</button>
+</div>

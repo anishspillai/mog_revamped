@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { Order } from '../shared/model/order';
+import { ShoppingCart } from '../shared/model/shopping-cart';
 import { SearchService } from '../shared/observables/search.service';
 import { ShoppingcartService } from '../shared/observables/shoppingcart.service';
+import { AuthService } from '../shared/services/auth.service';
 import { GroceryUtil } from '../shared/util/grocery-util';
 
 @Component({
@@ -11,20 +14,18 @@ import { GroceryUtil } from '../shared/util/grocery-util';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
-  
+
   searchString: string | undefined;
-  cartItems: Order[] = []
+  cart$: Observable<ShoppingCart>;
 
   constructor(private searchService: SearchService,
     private readonly router: Router,
-    private readonly shoppingCart: ShoppingcartService,
-    private readonly groceryUtil: GroceryUtil) {
+    private readonly cartService: ShoppingcartService,
+    private readonly authService: AuthService) {
   }
 
-  ngOnInit(): void {
-    this.shoppingCart.getOrdersObservable().subscribe(value => {
-      this.cartItems = value
-    })
+  async ngOnInit(): Promise<void> {
+    this.cart$ = await this.cartService.getCart();
   }
 
   textInputChange(inputString: string) {
@@ -32,14 +33,12 @@ export class LandingPageComponent implements OnInit {
     this.router.navigate(['/a/search-result'])
   }
 
-  getCountOfItems() {
-    const sum = this.cartItems.reduce((sum, current) =>
-      sum + current.noOfItems, 0)
-    return sum
+  get firebaseAuthObject() {
+    return this.authService.afAuth
   }
 
-  getCostOfItemsInCart(): number {
-    return this.groceryUtil.getTotalCostOfOrderedItems(this.cartItems)
+  logOut() {
+    this.authService.logout()
   }
 
 }

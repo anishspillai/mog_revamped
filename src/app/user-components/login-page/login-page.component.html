@@ -1,82 +1,25 @@
-<p class="text-secondary font-bold-700-open-sans text-center h5 p-2"> Login Page </p>
-<div style="height: 400px" class=" d-none d-lg-block bg-dark bg-gradient p-3 border-bottom">
+
+<div class="d-flex flex-row bg-dark">
+    <div class="p-2 bd-highlight col-lg-5 col-4"><a [routerLink]="['../a/x']" class="col-lg-3 col-3 ">
+        <img class="image-fluid" src="../assets/img/brand_icon.png" height="50" width="50">
+    </a></div>
+    <span class="text-white font-bold-700-open-sans text-center fs-4 p-3 bg-dark m-0"> Login </span>
+  </div>
+
+<div style="height: 500px" class=" d-none d-lg-block bg-dark bg-gradient p-3 border-bottom">
     <div class="container" style="position: relative;">
-        <div style="position: absolute; top:25%; left: 2%;"
-            class="card w-50 p-5 text-dark font-bold-700-open-sans shadow-lg">
-            <form>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-
-
-                <div class="d-flex justify-content-around py-3 font-bold-700-open-sans">
-
-                    <button type="submit" class="btn btn-success" (click)="login('', '')">Login</button>
-                    <button type="submit" class="btn btn-secondary">Register Me!</button>
-
-                    <a (click)="displayLoginButton = false" class="text-success">
-                        Click to Register</a>
-
-                    <a href="#" class="text-secondary" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                        aria-expanded="false" aria-controls="collapseExample">Forgot password?</a>
-                </div>
-
-
-                <div class="collapse" id="collapseExample">
-                    <div class="d-flex justify-content-between card-body bg-dark">
-                        <input type="email" class="form-control mx-2" id="exampleInputEmail10"
-                            aria-describedby="emailHelp"
-                            placeholder="Type your email address to send password reset link">
-                        <button type="submit" class="btn btn-danger">Send</button>
-                    </div>
-                </div>
-            </form>
+        <div style="position: absolute; top:25%; left: 2%;" class="card w-50 p-5 text-dark bg-form">
+            <app-login-form></app-login-form>
         </div>
         <div style="position: absolute; top:25%; left: 60%;">
             <img src="/assets/img/brand_icon.png" style="height: 350px; width: 350px" class="text-center img-fluid">
             <span class="text-info mx-2 font-bold-700-open-sans"> SINCE 2020</span>
         </div>
     </div>
-
-    <button (click)="login('', '')" >jhjhjhjk</button>
 </div>
 
 <!-- Mobile and Tab -->
 
-<div class="d-block d-lg-none m-1">
-    <form class="bg-light p-3">
-        <div class="mb-3">
-            <label for="exampleInputEmail11" class="form-label">Email address</label>
-            <input required type="email" class="form-control" id="exampleInputEmail11" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text text-muted">example@test.com</div>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword11" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword11">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <div class="d-flex justify-content-around py-3 font-bold-700-open-sans">
-        <a class="text-success">Register new user</a>
-        
-
-        <a href="#" class="text-secondary" data-bs-toggle="collapse" href="#collapseExample1" role="button"
-        aria-expanded="false" aria-controls="collapseExample">Forgot password?</a>
-    </div>
-
-
-
-    <div class="collapse" id="collapseExample1">
-        <div class="d-flex justify-content-between card-body bg-warning p-4">
-            <input type="email" class="form-control mx-2" id="exampleInputEmail19"
-                aria-describedby="emailHelp"
-                placeholder="Email address to send password reset link">
-            <button type="submit" class="btn btn-danger">Send</button>
-        </div>
-    </div>
+<div class="d-block d-lg-none p-2 bg-form">
+    <app-login-form></app-login-form>
 </div>

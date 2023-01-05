@@ -1,0 +1,61 @@
+<div *ngIf="userContactDetails">
+  <div class="grocery-type-side-bar-text-font">
+    <div class="card mb-4 border-0">
+      <div class="card-body border-0">
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0 fw-bold">First Name
+            </p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{userContactDetails.firstName }} </p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0 fw-bold">Last Name</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{userContactDetails.lastName}}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0 fw-bold">Apartment No</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{userContactDetails.apartmentNo}}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0 fw-bold">Street Name</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{userContactDetails.streetName}}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0 fw-bold">Post Number</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{userContactDetails.postNumber}}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0 fw-bold">Mobile</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">(+46) {{userContactDetails.telephoneNumber}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,91 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="grocery-type-side-bar-text-font">
+
+    <div class="form-floating">
+        <input type="email" class="form-control" id="floatingInputEmail" formControlName="email"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+        <label for="floatingInputEmail">Enter email address <span class="text-danger">*</span></label>
+
+
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors['required']">Email is required</div>
+            <div *ngIf="f['email'].errors['email']">Email is invalid. Format is example@example.com</div>
+        </div>
+    </div>
+
+
+    <div class="form-floating mt-2 mt-lg-5">
+        <input type="password" class="form-control" id="floatingInputPassword" formControlName="password"
+            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+        <label for="floatingInputPassword">Enter password <span class="text-danger">*</span></label>
+
+
+        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+            <div *ngIf="f['password'].errors['required']">Password is required.</div>
+            <div *ngIf="f['password'].errors['minlength']">Password must be minimum 6 characters</div>
+        </div>
+    </div>
+
+    <div *ngIf="!displayLogin" class="form-group form-check mt-3">
+        <input type="checkbox" formControlName="acceptTerms" class="form-check-input"
+            [ngClass]="{ 'is-invalid': submitted && f['acceptTerms'].errors }" />
+        <label for="acceptTerms" class="form-check-label grocery-type-side-bar-text-font">I have read and agree to the
+            Terms <a href="/privacy" target="_blank"> Open privacy policy in new window <i
+                    class="bi bi-box-arrow-up-right"></i> </a>
+        </label>
+        <div *ngIf="submitted && f['acceptTerms'].errors" class="invalid-feedback">
+            Accept Terms is required
+        </div>
+        <div class="d-flex justify-content-between py-3 font-bold-700-open-sans">
+            <button type="submit" class="btn btn-primary"><span class="grocery-type-side-bar-text-font">Create
+                    Account!</span></button>
+
+            <a (click)="displayLogin = true" class="btn btn-sm">
+                <span class="grocery-type-side-bar-text-font fw-bold"> Take me back to login page </span></a>
+        </div>
+
+    </div>
+
+    <div *ngIf="displayLogin">
+        <div class="d-flex justify-content-between py-3 font-bold-700-open-sans">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary"><span class="grocery-type-side-bar-text-font">Log
+                        in!</span></button>
+            </div>
+            <a href="#" class="btn btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                aria-expanded="false" aria-controls="collapseExample"><span
+                    class="grocery-type-side-bar-text-font fw-bold">Forgot password?</span></a>
+        </div>
+
+        <p> <span class="grocery-type-side-bar-text-font">Do not have account yet? </span><a
+                (click)="displayLogin = false" data-bs-toggle="collapse"
+                class="fw-bold text-danger grocery-type-side-bar-text-font btn btn-sm">
+                Click to Register</a>
+        </p>
+    </div>
+</form>
+
+
+
+<div id="collapseExample" class="collapse grocery-type-side-bar-text-font">
+    <div class="d-flex justify-content-between card-body bg-dark rounded shadow-lg p-2">
+        <input type="email" class="form-control mx-2" #emailIdForPasswordReset
+            placeholder="Type your email address to send password reset link">
+        <button type="submit" class="btn btn-danger"
+            (click)="resetPassword(emailIdForPasswordReset.value)">Send</button>
+    </div>
+
+    <div *ngIf="dispatchEmailPwReset" class="d-flex justify-content-center">
+        <div class="spinner-grow text-dark" role="status">
+        </div>
+    </div>
+
+    <div *ngIf="passwordResetEmailSent" class="text-success p-2 m2 grocery-type-side-bar-text-font">
+        <small>Password reset email has been sent successfully to {{emailIdForPasswordReset.value}}. Please
+            check inbox and spam folders as well. </small>
+    </div>
+
+</div>
+
+<div *ngIf="displayErrorMessage" class="alert alert-danger" role="alert">
+    {{errorMessage}}
+</div>

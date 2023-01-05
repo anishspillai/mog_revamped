@@ -1,24 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
 .font-bold-700-open-sans {
-    font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .linear-gradient-hr {
-    border: 0;
-    height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+  padding: 0;
+  margin: 0;
 }
 
-  /** { 
+
+
+.linear-gradient-thick-hr {
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(to right, rgb(1, 18, 12), #333, rgb(1, 18, 13));
+}
+
+/** { 
     font-family: 'Open Sans', sans-serif;
   }*/
 
-  .button:hover {
-    color: #125699!important
-  }
+.button:hover {
+  color: #125699 !important
+}
 
 
-  .grocery-type-side-bar-text-font {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+.grocery-type-side-bar-text-font {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif}
+
+.mobile-device-font {
+  font-size: small;
+}
+
+.work-in-progress-text {
+  font-size: xx-small;
+  font-style: italic;
+  color: brown;
 }

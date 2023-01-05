@@ -1,7 +1,8 @@
 a.bi:hover {
-  color: #9e2c3b !important;
+  color: #f2eaeb !important;
   transform: translateY(-0.25rem);
   box-shadow: 0px 3px 15px rgba(225, 222, 222, 0.2);
+  transition-duration: 1s, 1s, 1s, 1s;
 }
 
 .navbar .navbar-toggler-icon {
@@ -10,6 +11,14 @@ a.bi:hover {
 }
 
 .btn-success:hover {
-  transform: translateY(-3px);
+  transform: translateY(-1px);
   box-shadow: 5px 4px 17px rgba(229, 224, 224, 0.35);
+}
+
+.btn-close {
+  transition: all 0.2s ease
+}
+
+.btn-close:hover {
+  transform: rotate(180deg); /* Equal to rotateZ(45deg) */
 }

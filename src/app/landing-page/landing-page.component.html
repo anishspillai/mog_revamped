@@ -1,42 +1,64 @@
 <nav class="navbar navbar-expand-lg bg-dark sticky-top">
   <!--Keep it expanded until large screen. Then collide for medium and small screens-->
   <div class="container-fluid">
-    <a class="navbar-brand text-white col-lg-1" href="#">
+    <a class="navbar-brand text-white col-lg-1" [routerLink]="['x']">
       <img class="image-fluid" src="../assets/img/brand_icon.png" alt="..." height="50" width="50">
     </a>
 
 
-    <div class="navbar-toggler dropdown">
+    <div class="navbar-toggler dropdown grocery-type-side-bar-text-font">
       <i class="text-white" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="bi bi-person-fill-gear text-warning h1"></span>
       </i>
-      <div class="dropdown-menu">
-        <li><a [routerLink]="['g']" class="dropdown-item" data-bs-placement="top" title="User Detail">Contact Details
-          </a></li>
+      <div class="dropdown-menu g-2" style="font-size: small">
+        <li>
+          <a [routerLink]="['g']" class="dropdown-item">
+            <i class="bi bi-person-fill text-danger p-1"></i>Contact Details
+          </a>
+        </li>
         <li>
           <hr class="dropdown-divider">
         </li>
 
-        <li><a [routerLink]="['fa']" class="dropdown-item" data-bs-placement="top" title="User Detail">Favorite Items
-          </a></li>
+        <li>
+          <a [routerLink]="['fa']" class="dropdown-item">
+            <i class="bi bi-bag-heart-fill text-primary p-1"></i>Favorite Items
+          </a>
+        </li>
 
         <li>
           <hr class="dropdown-divider">
         </li>
 
-        <li><a [routerLink]="['oh']" class="dropdown-item" data-bs-placement="top" title="User Detail">Order History
-          </a></li>
+        <li>
+          <a [routerLink]="['oh']" class="dropdown-item">
+            <i class="bi bi-basket2-fill text-success p-1"></i>Order History
+          </a>
+        </li>
       </div>
     </div>
 
     <div class="navbar-toggler dropdown">
-      <button class=" btn btn-success position-relative" data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasRightMobile" aria-controls="offcanvasRightMobile">
-        <i class="bi bi-cart4 h5 px-lg-2"></i> <span class="font-bold-700-open-sans h6">110, 23 Kr</span>
+      <button *ngIf="cart$ | async as cart; else displayLoadingCart" class="btn btn-success position-relative btn-sm"
+        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightMobile" aria-controls="offcanvasRightMobile">
+        <i class="bi bi-cart4 mx-2"></i> <span>
+          {{cart.totalPrice}}Kr</span>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          {{getCountOfItems()}}
+          {{cart.totalItemsCount}}
         </span>
       </button>
+      <ng-template #displayLoadingCart>
+        <button class="btn btn-success position-relative btn-sm" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRightMobile" aria-controls="offcanvasRightMobile">
+          <i class="bi bi-cart4 mx-2"></i>
+          <div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            0
+          </span>
+        </button>
+      </ng-template>
     </div>
 
     <button class="navbar-toggler border-light" type="button" data-bs-toggle="offcanvas"
@@ -45,15 +67,13 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-
-
     <div class="navbar-toggler dropdown">
       <div class="d-grid">
         <div class="row">
           <div class="col-12">
-            <input type="text" size="500" [(ngModel)]="searchString" (ngModelChange)="textInputChange($event)"
-              class="form-control" placeholder="Search in our warehouse for finding warre"
-              aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input type="text" id="mobileSearchText" size="500" [(ngModel)]="searchString" (ngModelChange)="textInputChange($event)"
+              class="form-control" placeholder="Search in our warehouse for products" aria-label="Recipient's username"
+              aria-describedby="basic-addon2">
           </div>
         </div>
       </div>
@@ -61,7 +81,6 @@
 
 
     <div class="collapse navbar-collapse  justify-content-between">
-
       <div class="input-group  mr-auto mt-2 mt-lg-0" style="width: 700px">
         <input type="text" [(ngModel)]="searchString" (ngModelChange)="textInputChange($event)" class="form-control"
           placeholder="Search in our warehouse" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -70,16 +89,29 @@
         </div>
       </div>
 
-
-
-      <button class="effect effect-2 btn btn-success position-relative" data-bs-toggle="offcanvas"
+      <button *ngIf="cart$ | async as cart; else displayButton"
+        class="effect effect-2 btn btn-success position-relative" data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-        <i class="bi bi-cart4 h5 px-lg-2"></i> <span class="font-bold-700-open-sans h6"> {{getCostOfItemsInCart()}}
+        <i class="bi bi-cart4 h5 px-lg-2"></i> <span class="grocery-type-side-bar-text-font">
+          {{cart.totalPrice}} Kr
         </span>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          {{getCountOfItems()}}
+          {{cart.items.length}}
         </span>
       </button>
+
+      <ng-template #displayButton>
+        <button class="btn btn-success position-relative" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRightMobile" aria-controls="offcanvasRightMobile">
+          <i class="bi bi-cart4 mx-2"></i>
+          <div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            0
+          </span>
+        </button>
+      </ng-template>
 
       <a [routerLink]="['g']" class="bi bi-person-fill-gear text-info h2" data-bs-toggle="tooltip"
         data-bs-placement="top" title="User Detail"></a>
@@ -90,56 +122,55 @@
       <a [routerLink]="['oh']" class="bi bi-bag-plus-fill text-warning h2" data-bs-toggle="tooltip"
         data-bs-placement="top" title="Order History"></a>
 
-
-
-
-      <a *ngIf="true" class="nav-link d-flex flex-column align-items-center" data-bs-toggle="tooltip"
-        data-bs-placement="top" title="Please login">
-        <a [routerLink]="['../login']" type="button" class="btn btn-success"
-          style="--bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .60rem;">
-          Log In</a>
-        <small class="text-danger">Hi, Please log in</small>
-      </a>
-
-
-      <a *ngIf="false" class="nav-link d-flex flex-column align-items-center" data-bs-toggle="tooltip"
-        data-bs-placement="top" title="Click to Log out">
-        <button type="button" class="btn btn-danger"
+      <a *ngIf="firebaseAuthObject.user | async as user; else displayLoginPromptItem"
+        class="nav-link d-flex flex-column align-items-center" data-bs-toggle="tooltip" data-bs-placement="top"
+        title="Click to Log out">
+        <button type="button" class="btn btn-danger" (click)="logOut()"
           style="--bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .60rem;">
           Log Out</button>
-        <small class="text-muted">Hi ANISH Sasidharan Pillai</small>
+        <small class="grocery-type-side-bar-text-font text-white">{{user.uid | truncate:200}}</small>
       </a>
+
+      <ng-template #displayLoginPromptItem>
+        <a class="nav-link d-flex flex-column align-items-center" data-bs-toggle="tooltip" data-bs-placement="top"
+          title="Please login">
+          <a [routerLink]="['../login']" type="button" class="btn btn-success"
+            style="--bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .60rem;">
+            Log In</a>
+          <small class="text-danger">Hi, Please log in</small>
+        </a>
+      </ng-template>
 
     </div>
   </div>
 </nav>
 
-<div class="offcanvas offcanvas-start w-75" tabindex="-1" id="mobileSideBarDisplay"
-  aria-labelledby="offcanvasExampleLabel" data-bs-scroll="true">
+<div class="offcanvas offcanvas-start w-75 text-bg-dark" tabindex="-1" id="mobileSideBarDisplay"
+  aria-labelledby="offcanvasExampleLabel" data-bs-scroll="true" style="overflow-y: scroll">
   <app-side-bar-for-small-devices></app-side-bar-for-small-devices>
 </div>
 
 <div class="offcanvas offcanvas-end w-50 d-none d-lg-block" tabindex="-1" id="offcanvasRight"
-  aria-labelledby="offcanvasRightLabel">
+  aria-labelledby="offcanvasRightLabel" style="overflow-y: scroll">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title font-bold-700-open-sans h1 text-secondary" id="offcanvasRightLabel">Cart Details</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <h5 class="offcanvas-title font-bold-700-open-sans text-dark m-0 p-0" id="offcanvasRightLabel">Shopping cart summary
+    </h5>
+    <button type="button" class="btn-close text-bg-danger fw-bolder offcanvas-title" data-bs-dismiss="offcanvas"
+      aria-label="Close"></button>
   </div>
-  <div class="offcanvas-body">
-    <app-view-cart-items-sidebar></app-view-cart-items-sidebar>
+  <div class="offcanvas-body" data-bs-scroll="true">
+    <app-cart-items-details-table></app-cart-items-details-table>
   </div>
 </div>
 
-
-
 <div class="offcanvas offcanvas-end w-100 d-block d-lg-none" tabindex="-1" id="offcanvasRightMobile"
-  aria-labelledby="offcanvasRightMobileLabel">
+  aria-labelledby="offcanvasRightMobileLabel" style="overflow-y: scroll">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title font-bold-700-open-sans text-secondary" id="offcanvasRightLabel">Cart Details</h5>
+    <p class="offcanvas-title text-dark" id="offcanvasRightLabel">Shopping cart summary</p>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <app-view-cart-items-sidebar></app-view-cart-items-sidebar>
+    <app-cart-items-details-table></app-cart-items-details-table>
   </div>
 </div>
 

@@ -2,7 +2,7 @@ export class IndividualGrocery {
 
     actualPrice?: number;
     brandName = ''
-    id?: string
+    id: string
     imagePath?: string
     offerPrice?: number
     type?: string

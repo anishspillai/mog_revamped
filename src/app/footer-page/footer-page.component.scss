@@ -2,3 +2,12 @@
     float: left;
     margin: 0 0 0 15px;
 }
+
+
+
+@media screen and (max-width: 575px) {
+    p {
+        font-size: small;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+}

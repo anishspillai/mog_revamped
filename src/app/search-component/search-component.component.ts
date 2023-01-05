@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import algoliasearch from "algoliasearch/lite";
 
 
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
+import { ShoppingCart } from '../shared/model/shopping-cart';
 import { SearchService } from '../shared/observables/search.service';
+import { ShoppingcartService } from '../shared/observables/shoppingcart.service';
 import { IndividualGrocery } from '../shared/services/individual-grocery';
 @Component({
   selector: 'app-search-component',
   templateUrl: './search-component.component.html',
   styleUrls: ['./search-component.component.scss']
 })
-export class SearchComponentComponent {
+export class SearchComponentComponent implements OnInit {
 
 
   searchClient = algoliasearch(
@@ -19,6 +21,8 @@ export class SearchComponentComponent {
   );
 
   algoliaIndex = this.searchClient.initIndex("groceries")
+  cart$: Observable<ShoppingCart>;
+
 
   filteredGroceryList: IndividualGrocery[] = []
 
@@ -28,7 +32,7 @@ export class SearchComponentComponent {
   validSearchString = false
   isAwaitingPageLoad = false
 
-  constructor(private readonly searchService: SearchService) {
+  constructor(private readonly searchService: SearchService, private readonly cartService: ShoppingcartService) {
     this.searchService.onSearchInputObservable().pipe(debounceTime(400), distinctUntilChanged()).subscribe(inputString => {
       this.validSearchString = inputString != undefined && inputString.length > 0
       this.searchString = inputString
@@ -49,6 +53,10 @@ export class SearchComponentComponent {
     }
   }
 
+  async ngOnInit() {
+    this.cart$ = await this.cartService.getCart();
+  }
+
   private startFilteringWithUserInput() {
     if (this.validSearchString) {
       this.isAwaitingPageLoad = true
@@ -56,6 +64,7 @@ export class SearchComponentComponent {
         this.isAwaitingPageLoad = false
         this.paginationConfigParameers.totalItems = nbHits
         this.filteredGroceryList = hits as unknown as IndividualGrocery[]
+        this.filteredGroceryList.forEach(individualGrocery => individualGrocery.id = individualGrocery.objectID as string)
       }
       )
     }

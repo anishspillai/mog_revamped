@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { windowWhen } from 'rxjs';
 import { Order } from 'src/app/shared/model/order';
+import { ShoppingCart } from 'src/app/shared/model/shopping-cart';
 import { ShoppingcartService } from 'src/app/shared/observables/shoppingcart.service';
 import { IndividualGrocery } from 'src/app/shared/services/individual-grocery';
 
@@ -11,30 +12,17 @@ import { IndividualGrocery } from 'src/app/shared/services/individual-grocery';
 })
 export class IndividualGroceryComponent {
 
+  @Input() individualGrocery: IndividualGrocery
+  @Input('shopping-cart') shoppingCart: ShoppingCart;
 
-
-  @Input() individualGrocery: IndividualGrocery | undefined
-
-  constructor(private shoppingCartService: ShoppingcartService) {
-
+  constructor(private readonly cartService: ShoppingcartService) {
   }
 
-  stockCount(): number {
-    if (this.individualGrocery) {
-      return this.individualGrocery.stock === undefined ? 0 : this.individualGrocery.stock
-    }
-    return 0
+  addToCart() {
+    this.cartService.addToCart(this.individualGrocery);
   }
 
-  isItemNotAddedIntoTheCartAlready() {
-    const individualGroceryFromOrderedList = this.shoppingCartService.getShoppingCartItems().find(element => element.id == this.individualGrocery?.id)
-    return individualGroceryFromOrderedList === null || individualGroceryFromOrderedList === undefined
-  }
-
-  addItemToTheCart() {
-    if (this.individualGrocery) {
-      const order: Order = Order.createThisObjectFromIndividualGrocerObject(this.individualGrocery)
-      this.shoppingCartService.addGroceryToTheOrderList(order)
-    }
+  isStockAvailable(): any {
+    this.individualGrocery.stock && this.individualGrocery.stock > 0
   }
 }

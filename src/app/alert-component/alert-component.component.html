@@ -1,0 +1,14 @@
+<div *ngIf="alert && alert.length > 0">
+    <div *ngIf="alert[0].type === 0" class="alert bg-success alert-dismissible fade show top-alert w-100 text-white"
+        role="alert">
+        <strong>Success</strong> {{alert[0].message}}
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+    </div>
+
+
+    <div *ngIf="alert[0].type === 1" class="alert bg-danger alert-dismissible fade show top-alert w-100 text-white"
+        role="alert">
+        <strong>Failure</strong> {{alert[0].message}}
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+    </div>
+</div>

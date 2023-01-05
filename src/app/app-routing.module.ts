@@ -5,8 +5,11 @@ import { GroceryGridPageComponent } from './grocery-grid-page/grocery-grid-page.
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 import { SearchComponentComponent } from './search-component/search-component.component';
+import { AuthGuardService } from './shared/services/auth-guard.service';
+import { PrivacyComponent } from './user-components/login-page/login-form/privacy/privacy.component';
 import { LoginPageComponent } from './user-components/login-page/login-page.component';
-import { UserContactDetailsComponent } from './user-components/user-contact-details/user-contact-details.component';
+import { UserContactDetailsComponent } from './user-components/user-contact/user-contact-details/user-contact-details.component';
+import { UserContactParentComponent } from './user-components/user-contact/user-contact-parent/user-contact-parent.component';
 import { UserFavoriteItemsComponent } from './user-components/user-favorite-items/user-favorite-items.component';
 import { UserOrderHistoryComponent } from './user-components/user-order-history/user-order-history.component';
 
@@ -42,7 +45,7 @@ const routes: Routes = [
           },
           { 
               path: 'g',
-              component: UserContactDetailsComponent
+              component: UserContactParentComponent
           },
           { 
               path: 'oh',
@@ -60,11 +63,15 @@ const routes: Routes = [
   },
   { 
       path: 'order',
-      component: OrderConfirmationComponent
+      component: OrderConfirmationComponent, canActivate: [AuthGuardService]
   },
   { 
       path: 'login',
       component: LoginPageComponent
+  },
+  { 
+      path: 'privacy',
+      component: PrivacyComponent
   }
 ];
 

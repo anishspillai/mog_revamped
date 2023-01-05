@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ignoreElements } from 'rxjs';
+import { ignoreElements, Observable } from 'rxjs';
+import { ShoppingCart } from '../shared/model/shopping-cart';
+import { ShoppingcartService } from '../shared/observables/shoppingcart.service';
 import { FirebasedbService } from '../shared/services/firebasedb.service';
 import { IndividualGrocery } from '../shared/services/individual-grocery';
 @Component({
@@ -12,10 +14,9 @@ import { IndividualGrocery } from '../shared/services/individual-grocery';
 //https://therichpost.com/angular-14-bootstrap-5-grocery-ecommerce-store-free-template/
 export class GroceryGridPageComponent implements OnInit {
 
-  isSubGroceryType = false
   parentGroceryName = ''
   groceryName = '';
-  p = 1
+  pageNumber = 1 // Starts with one always for pagination ( Page no 1)
 
 
   @ViewChild('anish') test: ElementRef | undefined
@@ -25,49 +26,47 @@ export class GroceryGridPageComponent implements OnInit {
   // This one is for groceries
   groceryList: IndividualGrocery[] = []
   intactedGroceryList: IndividualGrocery[] = []
+  cart$: Observable<ShoppingCart>;
 
 
   productCategories: string[] = []
   brandNamesWithCountMap: Map<string, number> = new Map();
+  displayAll: boolean;
+  subMenu: boolean;
 
   constructor(private db: FirebasedbService,
     private activatedRouter: ActivatedRoute,
     private elementRef: ElementRef,
-    private router: Router
+    private router: Router,
+    private readonly cartService: ShoppingcartService
   ) {
   }
 
-  
+
   ngOnInit(): void {
-    this.activatedRouter.queryParamMap.subscribe(params => {
-      this.isSubGroceryType = params.get("subMenu") === 'true'
+    this.activatedRouter.queryParamMap.subscribe(async params => {
       this.parentGroceryName = params.get("mainType") as string
       this.groceryName = params.get("groceryType") as string
+      this.displayAll = params.get("displayAll") === 'true'
+      this.subMenu = params.get("subMenu") === 'true'
 
       this.fetchGroceries()
 
       this.fetchMenuForSideNavigation()
+
+      this.cart$ = await this.cartService.getCart();
     })
 
   }
 
-  addUserSelectedCheckBoxNameToChildView(filterBrandNameString: string) {
-    //var d1 = this.elementRef.nativeElement.querySelector('.anish');
-    //d1.insertAdjacentHTML('beforeend', '<span class="mx-2 badge bg-secondary">fsdfdf</span>');
-    //this.filterProduct(filterBrandNameString)
-  }
-
-  private filterProduct(searchString: string) {
-    this.groceryList = this.intactedGroceryList.filter(value => value.brandName.toLowerCase().includes(searchString.toLowerCase()))
-  }
-
   fetchGroceries() {
-    //window.alert(this.groceryName)
     this.isAwaitingPageLoad = true
     this.groceryList = []
     this.intactedGroceryList = []
+    this.pageNumber = 1
 
-    this.db.getGroceriesList(this.isSubGroceryType, this.groceryName).subscribe(groceries => {
+
+    this.db.getGroceriesList(this.subMenu, this.groceryName).subscribe(groceries => {
       groceries.forEach(grocerySnapshot => {
         const grocery: IndividualGrocery = grocerySnapshot.payload.val() as IndividualGrocery
         grocery.id = grocerySnapshot.key as string
@@ -83,7 +82,7 @@ export class GroceryGridPageComponent implements OnInit {
 
 
   private fetchMenuForSideNavigation() {
-    if (this.isSubGroceryType) {
+    if (this.subMenu || this.displayAll) {
       this.findSubMenu()
     } else {
       this.findMainMenu()
@@ -95,7 +94,6 @@ export class GroceryGridPageComponent implements OnInit {
     this.db.getMenuItemsByParentGroceryName(this.parentGroceryName).subscribe(productCategories => {
       productCategories.forEach(childSnapshot => {
         const childData = childSnapshot.payload;
-        console.log(JSON.stringify(childData.val()))
         this.productCategories.push(childData.val() as string)
       })
     })
@@ -116,17 +114,19 @@ export class GroceryGridPageComponent implements OnInit {
 
   // I was using ahref for <a> tag for navigating to the specific grocery. But it was reloading the page always.
   // To stop that, I removed the ahref and added the router.navigate methoda
-  navigateToTheGroceryItemClickedByUser(subItemLabel: string, itemLabel: string, isMainMenu: boolean) {
-    if (isMainMenu) {
-      this.router.navigate(['/grocery-list'], {
+  navigateToTheGroceryItemClickedByUser(childName: string, parentName: string, clickedOnChildName: boolean, displayAllButtonClicked: boolean) {
+    console.log(clickedOnChildName, displayAllButtonClicked, childName, parentName)
+    if (clickedOnChildName || displayAllButtonClicked) {
+      this.router.navigate(['a/y'], {
         queryParams: {
-          groceryType: subItemLabel,
-          subMenu: true,
-          mainType: itemLabel
+          groceryType: childName,
+          subMenu: clickedOnChildName,
+          mainType: parentName,
+          displayAll: displayAllButtonClicked
         }
       })
     } else {
-      this.router.navigate(['/grocery-list'], { queryParams: { groceryType: subItemLabel } })
+      this.router.navigate(['a/y'], { queryParams: { groceryType: childName } })
     }
   }
 
@@ -134,15 +134,25 @@ export class GroceryGridPageComponent implements OnInit {
   private extractBrands() {
     this.brandNamesWithCountMap = new Map()
     this.intactedGroceryList.forEach(value => {
-        if(!this.brandNamesWithCountMap.has(value.brandName)) {
-          this.brandNamesWithCountMap.set(value.brandName, 1);
-        } else 
-        {
-          //@ts-ignore
-          this.brandNamesWithCountMap.set(value.brandName, this.brandNamesWithCountMap.get(value.brandName) + 1)
-        }
+      if (!this.brandNamesWithCountMap.has(value.brandName)) {
+        this.brandNamesWithCountMap.set(value.brandName, 1);
+      } else {
+        //@ts-ignore
+        this.brandNamesWithCountMap.set(value.brandName, this.brandNamesWithCountMap.get(value.brandName) + 1)
       }
+    }
     )
+  }
+
+
+  loadNewPage($event: number) {
+    const scrollTo: ScrollToOptions = {
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    }
+    this.pageNumber = $event;
+    window.scrollTo(scrollTo)
   }
 }
 

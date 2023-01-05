@@ -1,4 +1,4 @@
-<div class="container p-3 my-2 shadow-lg border-opacity-10 w-75">
+<div class="container my-5 shadow-sm border-opacity-10 w-75 grocery-type-side-bar-text-font">
   <div class="collapse d-flex flex-lg-row justify-content-between ">
 
     <div class="nav-item dropdown" *ngFor="let item of menuItemsWithtSubItems">
@@ -6,12 +6,14 @@
         <span class="font-bold-700-open-sans">{{item.label}}</span>
       </a>
 
-      <div class="dropdown-menu border-light">
-        <div class="card border-0 py-2 px-5 fs-5 bg-light bg-gradient" style="width: 300px;">
-          <div *ngFor="let subItem of item.childItems; index as i" class="py-1 row">
-            <div [ngClass]="{'col' : i % 5 === 0}"> <!-- ROWS AND COLUMNS IN THE DROP DOWN-->
-              <a class="text-dark dropdown-item" (click)="navigateToThePage(item.label, subItem.label, true)"><span
-                  class="grocery-type-side-bar-text-font"> {{subItem.label}}</span></a>
+      <div class="dropdown-menu border-0">
+        <div class="px-3 pt-2 d-grid justify-content-between rounded menu-bar-box">
+          <div class="row p-0 m-o" style="width: 400px; min-height: 50px;"
+            *ngFor="let subMenuItems of item.childItemsForDesktop | keyvalue">
+            <div class="col-6 p-1" *ngFor="let subMenuItem of subMenuItems.value">
+              <a class="text-dark dropdown-item" data-bs-dismiss="dropdown-menu"
+                (click)="navigateToThePage(item.label, subMenuItem.label, true)">
+                <span> {{subMenuItem.label}}</span></a>
             </div>
           </div>
         </div>
@@ -22,17 +24,15 @@
       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="font-bold-700-open-sans"> All Other Products </span>
       </a>
-
-      <div class="dropdown-menu">
-        <div class="card border-0 py-2 p-2" style="width: 300px;">
-
-          <div *ngFor="let item of menuItemsWithOutSubItems" class="row p-1" style="width: 100%;">
-            <a class="text-dark dropdown-item" (click)="navigateToThePage(item.label, undefined, false)"><span
-                class="grocery-type-side-bar-text-font"> {{item.label}}</span></a>
+      <div class="dropdown-menu border-0">
+        <div class="menu-bar-box rounded p-3" style="width: 300px;">
+          <div *ngFor="let item of menuItemsWithOutSubItems">
+            <a class="text-dark dropdown-item" (click)="navigateToThePage(item.label, undefined, false)">
+              <span> {{item.label}} </span>
+            </a>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>

@@ -23,29 +23,29 @@ export class GroceryUtil {
 
     if (order.bulkPurchaseOfferAvailable) {
 
-      if (order.noOfItems >= order.bulkPurchaseOfferCount) {
-        let totalSet = order.noOfItems / order.bulkPurchaseOfferCount
+      if (order.quantity >= order.bulkPurchaseOfferCount) {
+        let totalSet = order.quantity / order.bulkPurchaseOfferCount
         sumOfIndividualOrder += Math.trunc(totalSet) * order.bulkPurchaseOfferPrice
       }
 
-      let extraItems = order.noOfItems % order.bulkPurchaseOfferCount
+      let extraItems = order.quantity % order.bulkPurchaseOfferCount
 
       sumOfIndividualOrder += extraItems * order.actualPrice
 
     } else if (order.maxShoppingIsRestricted) {
 
-      if (order.noOfItems <= order.maxShoppingCount) {
-        sumOfIndividualOrder += order.noOfItems * order.offerPrice
+      if (order.quantity <= order.maxShoppingCount) {
+        sumOfIndividualOrder += order.quantity * order.offerPrice
       } else {
-        let a = order.noOfItems - order.maxShoppingCount
+        let a = order.quantity - order.maxShoppingCount
         sumOfIndividualOrder += (a * order.actualPrice) + (order.maxShoppingCount * order.offerPrice)
       }
 
     } else {
       if (order.offerPrice == 0) {
-        sumOfIndividualOrder += order.noOfItems * order.actualPrice
+        sumOfIndividualOrder += order.quantity * order.actualPrice
       } else {
-        sumOfIndividualOrder += order.noOfItems * order.offerPrice
+        sumOfIndividualOrder += order.quantity * order.offerPrice
       }
     }
     return sumOfIndividualOrder

@@ -1,0 +1,17 @@
+
+
+        <div class="card border-0">
+            <span class="font-bold-700-open-sans">Filter by Brand</span> <span class="work-in-progress-text">Work In
+                Progress</span>
+
+            <span style="margin-left: 10px" *ngFor="let item of brandNamesWithCountMap | keyvalue">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                        (change)="addUserSelectedCheckBoxNameToChildView(item.key)">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <span class="grocery-type-side-bar-text-font">{{item.key}} </span> <span
+                            class="badge bg-success">{{item.value}}</span>
+                    </label>
+                </div>
+            </span>
+        </div>

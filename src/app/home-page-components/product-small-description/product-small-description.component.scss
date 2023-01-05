@@ -1,0 +1,30 @@
+.category-description-font {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+@media screen and (max-width: 575px) {
+    .h2 {
+        font-size: large;
+        margin: 0;
+    }
+
+    h5 {
+        font-size: medium;
+        margin: 0;
+    }
+
+    .card {
+        font-size: small;
+    }
+
+    hr {
+        border: 8px dashed rgb(176, 17, 70);
+        border-radius: 25px;
+    }
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    background-color: rgb(222, 188, 222);
+    transition-duration: 1s, 1s, 1s, 1s;
+}

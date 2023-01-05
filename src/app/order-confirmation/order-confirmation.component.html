@@ -1,14 +1,15 @@
-<div class="row bg-dark text-white sticky-top h1 p-3">
+<div class="row bg-dark text-white sticky-top h1 p-3 mx-1">
   <a [routerLink]="['../a/x']" class="col-lg-3 col-3 text-center my-md-1">
     <img class="image-fluid" src="../assets/img/brand_icon.png" height="50" width="50">
   </a>
   <span class="col-lg-4 col-9 text-secondary font-bold-700-open-sans text-lg-end"> Order Placement </span>
 </div>
-<div class="container-fluid g-5 mt-5">
+
+<div class="container-fluid mt-3">
   <div class="row my-2">
     <div class="col-lg-6 col-12 h-100 bg-gradient border-lg-end border-5">
 
-      <div class="card">
+      <!--div class="card">
         <div class="card-body">
           <h5 class="card-title text-dark font-bold-700-open-sans">Contact and Delivery Address</h5>
 
@@ -21,42 +22,50 @@
             </button>
           </div>
         </div>
-      </div>
+      </div-->
+      <app-user-contact-parent></app-user-contact-parent>
 
     </div>
 
-    <div class="col-lg-6 col-12 h-100">
+    <div class="col-lg-6 col-12 h-100 grocery-type-side-bar-text-font">
+      <p class="text-secondary text-center fw-bold "> Cost Summary </p>
 
-      <!-- Card -->
-      <div class="card mb-3  shadow-sm">
+      <div class="card mb-3 shadow-sm">
+        <span *ngIf="!isAddressValid" class="text-white  p-2" style="background-color: rgb(171, 53, 23);"> In order to
+          place your order, Delivery Address is required </span>
         <div class="card-body">
-
-
           <ul class="list-group list-group-flush">
 
             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
               <div>
-                <strong class="text-dark fw-bold font-bold-700-open-sans">The total amount of</strong>
-
+                <strong class="text-dark fw-bold font-bold-700-open-sans ">The total
+                  amount of</strong>
                 <small>
                   <p class="mb-0 text-success fw-bold">(MOMs in included)</p>
                 </small>
-                <span class="mx-1 badge bg-danger">Delivry charge applicable, 50Kr</span>
               </div>
-              <span><strong class="text-dark fw-bold font-bold-700-open-sans h4">Kr 6688, 69 </strong></span>
+              <div>
+                <strong class="text-dark fw-bold font-bold-700-open-sans  h4">{{price}}
+                  Kr</strong>
+                <p *ngIf="price < 500"><span class="text-danger mobile-font-size">Delivery cost 50 Kr extra</span>
+                </p>
+              </div>
             </li>
           </ul>
 
-          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#orderConfirmationModel"
-            [disabled]="false">
+          <button *ngIf="!orderBeingPlaced; else showStatusButton"  type="button" (click)="placeOrder()"
+            class="btn btn-dark btn-sm" data-toggle="modal" data-target="#orderConfirmationModel" [disabled]="!isAddressValid">
             Click to Place Order
           </button>
-
+          <ng-template #showStatusButton>
+            <button class="btn btn-dark btn-sm" type="button" disabled>
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Order Placing...
+            </button>
+          </ng-template>
         </div>
       </div>
-      <!-- Card -->
 
-      <!-- Card -->
       <div class="card mb-3 col-12 shadow-sm">
         <div class="card-body">
 
@@ -75,17 +84,15 @@
           </div>
         </div>
       </div>
-      <!-- Card -->
 
     </div>
-    <!--Grid column-->
 
   </div>
-  <!--Grid row-->
 </div>
 
 <hr class="dotted-hr mt-3">
-<div class="fs-5">
+<div class="m-2">
+  <p class="font-bold-700-open-sans text-center h6 "> Order Summary </p>
+
   <app-cart-items-details-table></app-cart-items-details-table>
 </div>
-<app-available-brands></app-available-brands>

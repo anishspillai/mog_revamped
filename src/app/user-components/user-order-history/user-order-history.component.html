@@ -1,16 +1,107 @@
 <p class="text-secondary fw-bolder text-center h2 my-2"> Order History </p>
 
+<div *ngIf="orderHistory; else moveToLoginLoadCheck" class="container justify-content-between">
+  <div *ngFor="let oh of orderHistory; let i = index">
+    <div class="card p-2 my-3 border border-dark rounded shadow-sm">
+      <div class="row">
+        <span class="col-9 fw-bolder text-muted"
+          style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{oh.orderedTimestamp}}</span>
 
-<div *ngIf="!isLoggedIn()" class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>You have not logged in!</strong> Please login and try again
-</div>
+        <div class="col">
+          <button class="btn btn-dark d-none d-lg-block" type="button" data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#collapse'+i" aria-expanded="false" aria-controls="collapseExample">
+            <span> Click to see details <i class="bi bi-arrow-down-circle-fill text-warning h3"></i></span>
+          </button>
 
-<div *ngIf="pageBeingLoaded" class="my-5 d-flex justify-content-center">
-  <div class="spinner-grow" role="status">
-    <span class="visually-hidden">Loading...</span>
+          <button class="btn btn-dark d-block d-lg-none btn-sm" type="button" data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#collapse'+oh.orderKey" aria-expanded="false" aria-controls="collapseExample">
+            Details
+          </button>
+        </div>
+
+        <div class="collapse" [id]="'collapse'+i">
+          <div class="card card-body border-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Brand</th>
+                  <th scope="col">Item</th>
+                  <th scope="col">Weight</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Cost</th>
+                  <th scope="col">Total Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of oh.orderHistory; let i = index" class="text-small">
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{order.brandName}}</td>
+                  <td>{{order.type}}</td>
+                  <td>{{order.grossWeight}} {{order.unitOfWeight}}</td>
+                  <td>{{order.quantity}}</td>
+                  <td>{{order.actualPrice}} Kr</td>
+                  <td>{{order.actualPrice * order.quantity}} Kr</td>
+                </tr>
+                <tr class="bg-light text-dark font-weight-bold">
+                  <td colspan="6" class="text-small">Total Cost</td>
+                  <td class="text-small">TOTAL Kr <br>
+                    <span class="text-primary text-small">(inclusive of 12% MOMS)</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+
+        <div class="collapse" [id]="'collapse'+oh.orderKey">
+          <div class="card card-body mt-2">
+            <table class="table table-striped">
+              <thead class="mobile-device-font">
+                <tr>
+                  <th scope="col">Item</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Cost</th>
+                  <th scope="col">Total Cost</th>
+                </tr>
+              </thead>
+              <tbody class="mobile-device-font">
+                <tr *ngFor="let order of oh.orderHistory" class="text-small">
+                  <td>{{order.brandName}}, {{order.type}}, {{order.grossWeight}} {{order.unitOfWeight}}</td>
+                  <td>{{order.quantity}}</td>
+                  <td>{{order.actualPrice}} Kr</td>
+                  <td>{{order.actualPrice * order.quantity}} Kr</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div>
+      </div>
+
+    </div>
   </div>
 </div>
 
-<div *ngIf = "orderHistory">
-  {{orderHistory | json}}
-</div>
+<ng-template #moveToLoginLoadCheck>
+  <div *ngIf="isAwaitingPageLoad; else showLogin" class="my-5 d-flex justify-content-center">
+    <div class="spinner-grow" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <ng-template #showLogin>
+    <div *ngIf="!user">
+      <div class="alert alert-warning" role="alert"
+        style="background-color: rgb(86, 74, 76); color :rgb(224, 229, 233);">
+        <strong>You have not logged in!</strong> Please login and try again
+      </div>
+      <a [routerLink]="['/login']" type="button" class="btn btn-dark float-end m-3">
+        Take me to Login page now <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </ng-template>
+</ng-template>

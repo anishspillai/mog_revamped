@@ -1,0 +1,87 @@
+<div class="row grocery-type-side-bar-text-font">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="m-2">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGrid" formControlName="firstName"
+                    [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }">
+                <label for="floatingInputGrid" class="text-danger">First Name <span>*</span></label>
+
+                <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['firstName'].errors['required']">First Name is required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-2">
+            <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInputGrid" formControlName="lastName">
+                <label for="floatingInputGrid" class="text-muted">Last Name ( Optional )</label>
+            </div>
+        </div>
+
+        <div class=" m-2">
+            <div class="form-floating">
+
+                <input type="text" class="form-control" id="floatingInputGrid" formControlName="apartmentNo"
+                    [ngClass]="{ 'is-invalid': submitted && f['apartmentNo'].errors }">
+                <label for="floatingInputGrid" class="text-danger">Apartment Name/ Number <span
+                        class="text-danger">*</span></label>
+
+                <div *ngIf="submitted && f['apartmentNo'].errors" class="invalid-feedback">
+                    <div *ngIf="f['apartmentNo'].errors['required']">Apartment Number is required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" m-2">
+            <div class="form-floating">
+
+                <input type="text" class="form-control" id="floatingInputGrid" formControlName="streetName"
+                    [ngClass]="{ 'is-invalid': submitted && f['streetName'].errors }">
+                <label for="floatingInputGrid" class="text-danger">Street Name <span
+                        class="text-danger">*</span></label>
+
+                <div *ngIf="submitted && f['streetName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['streetName'].errors['required']">Street Name is required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" m-2">
+            <div class="form-floating">
+
+                <input type="text" class="form-control" id="floatingInputGrid" formControlName="postNumber"
+                    [ngClass]="{ 'is-invalid': submitted && f['postNumber'].errors }">
+                <label for="floatingInputGrid" class="text-danger">Post Number <span class="text-danger">* (Only
+                        numbers)</span></label>
+
+                <div *ngIf="submitted && f['postNumber'].errors" class="invalid-feedback">
+                    <div *ngIf="f['postNumber'].errors['required']">Post Number is required</div>
+                    <div *ngIf="f['postNumber'].errors['minlength']">Post Number is 5 digits minimum length</div>
+                    <div *ngIf="f['postNumber'].errors['pattern']">Post Number accepts only digits ( 0 to 9 )</div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" m-2">
+            <div class="form-floating">
+
+                <input type="text" class="form-control" id="floatingInputGrid" formControlName="telephoneNumber"
+                    [ngClass]="{ 'is-invalid': submitted && f['telephoneNumber'].errors }">
+                <label for="floatingInputGrid" class="text-danger">Mobile Number <span
+                        class="text-danger">*</span></label>
+
+                <div *ngIf="submitted && f['telephoneNumber'].errors" class="invalid-feedback">
+                    <div *ngIf="f['telephoneNumber'].errors['required']">Phone Number is required</div>
+                    <div *ngIf="f['telephoneNumber'].errors['minlength']">Mobile Number is 9 digits minimum length</div>
+                    <div *ngIf="f['telephoneNumber'].errors['pattern']">Mobile Number accepts only digits (0 to 9 )
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="float-end btn btn-sm me-3 my-2"
+            style="background-color: rgb(240, 10, 144); color: white">Save Details</button>
+
+    </form>
+</div>

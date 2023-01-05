@@ -1,10 +1,10 @@
-<div class="card card-product col-sm-12">
+<div class="card card-product col-sm-12 mb-2 w-100 grocery-type-side-bar-text-font ">
     <div class="card-body">
         <div class="text-center position-relative ">
             <div class=" position-absolute top-0 start-0">
-                <span class="badge bg-danger">Sale</span>
+                <span *ngIf="individualGrocery.offerPrice" class="badge bg-danger">Sale</span>
             </div>
-            <a href="#!"> <img src="{{individualGrocery?.imagePath}}" alt="Missing Image"
+            <a href="#!"> <img src="{{individualGrocery.imagePath}}" alt="Missing Image"
                     class="mb-3 img-fluid img-size"></a>
             <div class="card-product-action">
                 <a href="#!" class="btn-action" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i
@@ -16,36 +16,42 @@
             </div>
         </div>
         <div class="text-small mb-1"><a href="#!"
-                class="text-decoration-none text-muted"><small>{{individualGrocery?.brandName}}</small></a></div>
+                class="text-decoration-none text-muted"><small>{{individualGrocery.brandName}}</small></a></div>
         <h2 class="fs-6"><a href="#!"
-                class="text-inherit text-dark  text-decoration-none">{{individualGrocery?.type}}</a></h2>
+                class="text-inherit text-dark  text-decoration-none">{{individualGrocery.type}}</a></h2>
+        <h2 class="fs-6"><a href="#!"
+                class="text-inherit text-dark  text-decoration-none">{{individualGrocery.weight}} {{individualGrocery.unitOfWeight}}</a></h2>
         <div>
             <small class="text-warning"> <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i></small> <span
-                class="text-muted small">{{individualGrocery?.actualPrice}}</span>
+                <i class="bi bi-star-half"></i></small> 
+                <!--span class="text-muted small">{{individualGrocery.actualPrice}}</span-->
         </div>
 
-        <div><span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
-        </div>
+        <div *ngIf="individualGrocery.offerPrice; else displayActualPrice"><span class="text-dark">Kr
+                {{individualGrocery.offerPrice}}</span> <span class="text-decoration-line-through text-muted">Kr
+                {{individualGrocery.actualPrice}}</span></div>
 
-        <div *ngIf="isItemNotAddedIntoTheCartAlready()">
-            <button *ngIf="stockCount() === 0" href="#!" class="btn btn-success btn-sm mt-3"
-                (click)="addItemToTheCart()">
-                Add
-            </button>
-            <a *ngIf="stockCount() > 0" href="#!" class="btn btn-danger btn-sm disabled">Out of stock
-            </a>
-        </div>
+        <ng-template #displayActualPrice>
+            <span class="text-dark">Kr {{individualGrocery.actualPrice}}</span>
+        </ng-template>
 
-        <div *ngIf="!isItemNotAddedIntoTheCartAlready()"
-            class="d-flex justify-content-evenly align-items-center mt-3 mx-sm-1">
-            <i class="bi bi-dash-square-fill h4 btn btn-danger responsive-font"></i>
-            <span class="text-center"> 44 </span>
-            <i class="bi bi-plus-square-fill h4 btn btn-success responsive-font"></i>
-        </div>
 
+        <div class="bg-none mt-2">
+            <div *ngIf="!isStockAvailable(); else displayOutOfStockButton">
+                <button *ngIf="shoppingCart.getQuantity(individualGrocery) === 0; else updateQuantity"
+                    (click)="addToCart()" class="btn btn-block btn-dark  btn-sm">Add to Cart</button>
+                <ng-template #updateQuantity>
+                    <app-product-quantity-changer-buttons [product]="individualGrocery" [shopping-cart]="shoppingCart">
+                    </app-product-quantity-changer-buttons>
+                </ng-template>
+            </div>
+            <ng-template #displayOutOfStockButton>
+                <button disabled class="btn btn-block btn-danger btn-sm">Out of stock</button>
+            </ng-template>
+        </div>
     </div>
+
 </div>

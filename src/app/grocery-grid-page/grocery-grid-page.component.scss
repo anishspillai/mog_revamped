@@ -1,5 +1,17 @@
-.work-in-progress-text {
-    font-size: xx-small;
-    font-style: italic;
-    color: brown;
+
+#category .text-dark:hover {
+    color: rgb(191, 44, 44);
+    cursor: pointer;
+    transform: translateY(-1px);
+    font-weight: bolder;
+}
+
+.font-smaller {
+    font-size:x-small;
+}
+
+.btn-sm:hover {
+    transform: translateX(5px);
+    transition-duration: 5s;
+    zoom: 1.2;
 }

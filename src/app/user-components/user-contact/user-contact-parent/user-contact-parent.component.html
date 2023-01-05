@@ -1,0 +1,61 @@
+<p class="text-secondary text-center fw-bold grocery-type-side-bar-text-font"> Delivery Address </p>
+
+<div *ngIf="error">
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Exception Encountered!</h4>
+        <p>Unfortunately, there is an exception occurered. Details can be found below</p>
+        <hr>
+        <p class="mb-0">{{error.message | json }}</p>
+    </div>
+</div>
+<div class="m-lg-2 m-1 grocery-type-side-bar-text-font">
+    <div class="container border border-1 rounded shadow-lg">
+
+        <div *ngIf="userContactDetails; else moveToLoginLoadCheck">
+            <div class="d-flex m-auto">
+                <button *ngIf="!editUserDetails" type="submit" class="btn btn-warning btn-sm mt-2"
+                    (click)="editUserDetails=true">Edit My Details</button>
+
+                <button *ngIf="editUserDetails" type="submit" class=" btn btn-sm mt-2 text-white"
+                    (click)="editUserDetails = false" style="background-color: rgb(95, 120, 27);"> I do not want to edit my details </button>
+            </div>
+
+            <app-edit-user-contact-details *ngIf="editUserDetails" [userContactDetails]="userContactDetails"
+                [userId]="user.uid" (keepEditUserDialogOpenEventEmitter)="editUserDetails = $event">
+            </app-edit-user-contact-details>
+
+            <app-user-contact-details *ngIf="!editUserDetails" [userContactDetails]="userContactDetails">
+            </app-user-contact-details>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #moveToLoginLoadCheck>
+    <div *ngIf="isAwaitingPageLoad; else showLogin" class="my-5 d-flex justify-content-center">
+        <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <ng-template #showLogin>
+        <div *ngIf="!user; else showDataMissing">
+            <div class="d-grid">
+                <div class="mt-2 p-2" role="alert"
+                    style="background-color: rgb(86, 74, 76); color :rgb(224, 229, 233);">
+                    <strong>You have not logged in!</strong> Please login and try again
+                </div>
+
+                <a [routerLink]="['/login']" type="button" class="btn btn-dark float-end m-3 col-6">
+                    <span class=" grocery-type-side-bar-text-font mx-2"> Open Login page </span> <i
+                        class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <ng-template #showDataMissing>
+            <app-edit-user-contact-details [userContactDetails]="userContactDetails" [userId]="user.uid"
+                (keepEditUserDialogOpenEventEmitter)="editUserDetails = $event">
+            </app-edit-user-contact-details>
+        </ng-template>
+    </ng-template>
+</ng-template>

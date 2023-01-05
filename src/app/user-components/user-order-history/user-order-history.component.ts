@@ -1,9 +1,10 @@
-import { DatePipe, DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
 import { mergeMap, of } from 'rxjs';
 import { OrderHistoryModel } from 'src/app/shared/model/order-history-model';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { User } from "firebase/auth";
 import { FirebasedbService } from 'src/app/shared/services/firebasedb.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-user-order-history',
@@ -12,23 +13,38 @@ import { FirebasedbService } from 'src/app/shared/services/firebasedb.service';
   providers: [DatePipe]
 
 })
-export class UserOrderHistoryComponent implements OnInit {
+export class UserOrderHistoryComponent {
+  isAwaitingPageLoad = false
+  user: User;
+  error: any
+  orderHistory: OrderHistoryModel[]
 
-  constructor(private readonly authService: AuthService, private readonly db: FirebasedbService, private readonly datePipe: DatePipe,
+  constructor(private readonly db: FirebasedbService,
+    private readonly datePipe: DatePipe,
+    private auth: AngularFireAuth
   ) {
+    this.isAwaitingPageLoad = true
+    this.auth.authState.subscribe({
+      next: (user) => {
+        if (user) {
+          this.user = user as User
+          this.getOrderHistory(user.uid)
+        } else {
+          this.isAwaitingPageLoad = false
+        }
+      },
+      error: (e) => {
+        this.isAwaitingPageLoad = false
+        this.error = e
+      }
+    });
+
   }
 
-  pageBeingLoaded = false
-  orderHistory: OrderHistoryModel[] = []
-
-
-  ngOnInit() {
-
-    const user: string = this.authService.getUserId()
-
-    if (user) {
-      this.pageBeingLoaded = true;
-      this.db.getOrderHistory(user).pipe(mergeMap((value: any[]) => {
+  getOrderHistory(uuid: string) {
+    this.orderHistory = []
+    try {
+      this.db.getOrderHistory(uuid).pipe(mergeMap((value: any[]) => {
         value.forEach(childSnapshot => {
 
           let keyOfOrder = ""
@@ -38,14 +54,12 @@ export class UserOrderHistoryComponent implements OnInit {
           keyOfOrder = childSnapshot.payload.val().orderPlacementTime
 
           orderHistoryComponent.orderKey = keyOfOrder
-
-          //orderHistoryComponent.orderedTimestamp = this.datePipe.transform(new Date(parseInt(childSnapshot.payload.val().orderPlacementTime)),
-           // 'MMM d, y, h:mm:ss a')
+          
+          orderHistoryComponent.orderedTimestamp = this.datePipe.transform(new Date(parseInt(childSnapshot.payload.val().orderPlacementTime)), 'MMM d, y, h:mm:ss a') || ''
 
           orderHistoryComponent.orderHistory = childSnapshot.payload.val().order
 
           orderHistoryComponent.deliveryStatus = childSnapshot.payload.val().deliveryStatus
-          //})
 
           this.orderHistory.push(orderHistoryComponent)
 
@@ -53,14 +67,13 @@ export class UserOrderHistoryComponent implements OnInit {
         return of('')
       }
       )).subscribe(() => {
-        this.pageBeingLoaded = false;
         this.orderHistory.reverse()
+        this.isAwaitingPageLoad = false
       })
     }
-
-  }
-
-  isLoggedIn() {
-    return this.authService.isLoggedIn()
+    catch (error) {
+      this.isAwaitingPageLoad = false
+    }
   }
 }
+

@@ -1,27 +1,24 @@
 .carousel .carousel-control-prev {
-    opacity: .8;
+    opacity: .5;
     background-color: gray;
     width: 5%;
-    height: 500px;
-    align-items: center;
-    bottom: 0;
     left: -40px;
+    justify-content:center;
+    border-radius: 25px;
 }
 
 .carousel .carousel-control-next {
-    opacity: .8;
+    opacity: .5;
     background-color: gray;
     width: 5%;
-    height: 500px;
-    align-items: center;
-    bottom: 0;
     right: -40px;
+    border-radius: 25px;
 }
 
 .carousel .carousel-control-prev:hover,
 .carousel .carousel-control-next:hover {
     opacity: 1;
-    background-color: rgb(23, 20, 21);
+    background-color: rgb(222, 111, 148);
     width: 5%;
 
     transform: translateY(-3px);
@@ -36,3 +33,22 @@
     display: block;
     box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
 }
+
+
+
+@media screen and (max-width: 575px) {
+    p {
+        font-size: small;
+    }
+
+    h2 {
+        font-size: large;
+    }
+}
+
+
+/**a:hover {
+    transform: translateY(-3px);
+    background-color: rgb(17, 1, 17);
+    transition-duration: 1s, 1s, 1s, 1s;
+}*/

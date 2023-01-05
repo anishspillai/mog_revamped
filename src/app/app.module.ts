@@ -12,10 +12,9 @@ import { AvailableBrandsComponent } from './home-page-components/available-brand
 import { AllProductsSummaryComponent } from './all-products-summary/all-products-summary.component';
 import { FooterPageComponent } from './footer-page/footer-page.component';
 import { CartItemsDetailsTableComponent } from './cart-items/cart-items-details-table/cart-items-details-table.component';
-import { ViewCartItemsSidebarComponent } from './cart-items/view-cart-items-sidebar/view-cart-items-sidebar.component';
 import { GroceryTypesTopMenuBarComponent } from './grocery-grid-components/grocery-types-top-menu-bar/grocery-types-top-menu-bar.component';
 import { UserOrderHistoryComponent } from './user-components/user-order-history/user-order-history.component';
-import { UserContactDetailsComponent } from './user-components/user-contact-details/user-contact-details.component';
+import { UserContactDetailsComponent } from './user-components/user-contact/user-contact-details/user-contact-details.component';
 import { UserFavoriteItemsComponent } from './user-components/user-favorite-items/user-favorite-items.component';
 import { LoginPageComponent } from './user-components/login-page/login-page.component';
 
@@ -29,9 +28,23 @@ import { IndividualGroceryComponent } from './grocery-grid-components/individual
 import { CommonModule } from '@angular/common';
 import { NgAisModule } from 'angular-instantsearch';
 import { SearchComponentComponent } from './search-component/search-component.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { GroceryUtil } from './shared/util/grocery-util';
+import { ProductQuantityChangerButtonsComponent } from './grocery-grid-components/product-quantity-changer-buttons/product-quantity-changer-buttons.component';
+import { LoginFormComponent } from './user-components/login-page/login-form/login-form.component';
+import { AlertComponentComponent } from './alert-component/alert-component.component';
+import { AlertService } from './shared/services/alert.service';
+import { ProductSmallDescriptionComponent } from './home-page-components/product-small-description/product-small-description.component';
+import { OurServicesComponent } from './home-page-components/our-services/our-services.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditUserContactDetailsComponent } from './user-components/user-contact/edit-user-contact-details/edit-user-contact-details.component';
+import { UserContactParentComponent } from './user-components/user-contact/user-contact-parent/user-contact-parent.component';
+import { AddresscheckService } from './shared/services/addresscheck.service';
+import { AuthGuardService } from './shared/services/auth-guard.service';
+import { RefinementComponent } from './grocery-grid-components/refinement/refinement.component';
+import { FilterByBrandComponent } from './grocery-grid-components/filter-by-brand/filter-by-brand.component';
+import { FilterByPriceComponent } from './grocery-grid-components/filter-by-price/filter-by-price.component';
+import { TruncatePipe } from './shared/pipes/text-truncate';
 
 
 
@@ -45,7 +58,6 @@ import { GroceryUtil } from './shared/util/grocery-util';
     CarouselHomePageComponent,
     AvailableBrandsComponent,
     AllProductsSummaryComponent,
-    ViewCartItemsSidebarComponent,
     FooterPageComponent,
     CartItemsDetailsTableComponent,
     GroceryTypesTopMenuBarComponent,
@@ -54,7 +66,18 @@ import { GroceryUtil } from './shared/util/grocery-util';
     UserFavoriteItemsComponent,
     LoginPageComponent,
     IndividualGroceryComponent,
-    SearchComponentComponent
+    SearchComponentComponent,
+    ProductQuantityChangerButtonsComponent,
+    LoginFormComponent,
+    AlertComponentComponent,
+    ProductSmallDescriptionComponent,
+    OurServicesComponent,
+    EditUserContactDetailsComponent,
+    UserContactParentComponent,
+    RefinementComponent,
+    FilterByBrandComponent,
+    FilterByPriceComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
@@ -66,8 +89,10 @@ import { GroceryUtil } from './shared/util/grocery-util';
     FormsModule,
     NgAisModule.forRoot(),
     NgxPaginationModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
-  providers: [AuthService, FirebasedbService, GroceryUtil],
+  providers: [AuthService, FirebasedbService, AlertService, AddresscheckService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,11 +4,11 @@
     }
 
     .carousel-inner .carousel-item>div:first-child {
-         //border: none;
+        //border: none;
     }
 
-    .carousel-inner .carousel-item .div .div >.card {
-         border: none;
+    .carousel-inner .carousel-item .div .div>.card {
+        border: none;
     }
 
     .card {
@@ -16,9 +16,20 @@
         padding: 5px;
         background-color: none;
     }
+
     .img {
         height: 50px;
         width: 50px;
+    }
+
+    .h2 {
+        font-size: large;
+        margin: 0;
+    }
+
+    hr {
+        border: 8px dashed rgb(176, 17, 70);
+        border-radius: 25px;
     }
 }
 
@@ -52,4 +63,4 @@
     height: 200px;
     border-radius: 50%;
     background-color: none;
-  }
+}

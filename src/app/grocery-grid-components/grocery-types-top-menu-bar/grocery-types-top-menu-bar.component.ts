@@ -3,6 +3,7 @@ import { FirebasedbService } from 'src/app/shared/services/firebasedb.service';
 import { Menuitem } from 'src/app/shared/services/menuitem';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,12 @@ export class GroceryTypesTopMenuBarComponent implements OnInit {
   menuItemsWithOutSubItems: Menuitem[] = []
   menuItemsWithtSubItems: Menuitem[] = []
 
-  constructor(private firebaseDbObj: FirebasedbService, private router: Router) {
+  menuItemWithOutSubItemsMap: Map<number, Menuitem[]> = new Map()
+
+  constructor(readonly firebaseDbObj: FirebasedbService, 
+    readonly router: Router) {
   }
+
   ngOnInit(): void {
     this.firebaseDbObj.getProductCategoriesForMenuDisplay().subscribe(allMenuItems => {
       this.menuItemsWithOutSubItems = []
@@ -27,7 +32,7 @@ export class GroceryTypesTopMenuBarComponent implements OnInit {
         const childData = menuItem.payload;
         if (!Array.isArray(childData.val())) {
           const menuItem: Menuitem = new Menuitem(childData.val() as string)
-          menuItem.url = 'grocery-list?groceryType=' + childData.val()
+          menuItem.url = 'a/y?groceryType=' + childData.val()
           this.menuItemsWithOutSubItems.push(menuItem)
         } else {
           const menuItem: Menuitem = new Menuitem(childData.key as string)
@@ -40,11 +45,23 @@ export class GroceryTypesTopMenuBarComponent implements OnInit {
             subMenuItems.push(subMenuItem)
           })
           menuItem.childItems = subMenuItems
+          menuItem.childItemsForDesktop = this.convertToMap(subMenuItems)
           this.menuItemsWithtSubItems.push(menuItem)
         }
       })
-
     })
+  }
+
+
+  convertToMap(subMenuItems: Menuitem[]) {
+    const menuItemMap: Map<number, Menuitem[]> = new Map()
+    if (subMenuItems) {
+      for (let i = 0; i < subMenuItems.length; i += 4) {
+        const chunk = subMenuItems.slice(i, i + 4);
+        menuItemMap.set(i, chunk)
+      }
+    }
+    return menuItemMap
   }
 
   navigateToThePage(mainItem: any, subMenuItem: any, isSubMenu: boolean) {
@@ -54,5 +71,4 @@ export class GroceryTypesTopMenuBarComponent implements OnInit {
       this.router.navigate(['a/y'], { queryParams: { groceryType: mainItem } })
     }
   }
-
 }

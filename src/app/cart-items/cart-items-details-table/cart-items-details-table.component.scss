@@ -1,6 +1,36 @@
 /* If the screen size is smaller than 1200px, set the font-size to 80px */
 @media (max-width: 1199.98px) {
-    .responsive-font {
-      font-size: 10px;
-    }
+  .responsive-font {
+    font-size: 10px;
   }
+}
+
+@media screen and (max-width: 575px) {
+  table {
+    font-size: small;
+  }
+}
+.btn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.3s;
+}
+
+.btn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.btn:hover span {
+  padding-right: 25px;
+}
+
+.btn:hover span:after {
+  opacity: 1;
+  right: 0;
+}

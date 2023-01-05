@@ -1,8 +1,16 @@
 .dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0; // remove the gap so it doesn't close
- }
+   display: block;
+   margin-top: 0; // remove the gap so it doesn't close
+}
 
- .dropdown::after .dropdown-menu {
-    display: none;
- }
+.menu-bar-box {
+   background-color: #f8d49d;
+}
+
+.menu-bar-box a:hover {
+   cursor: pointer;
+   background-color: inherit;
+   transform: translateY(-2px);
+   font-weight: bolder;
+   //transition-duration: 1s;
+}

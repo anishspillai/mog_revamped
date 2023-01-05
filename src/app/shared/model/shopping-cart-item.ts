@@ -1,15 +1,19 @@
 export class ShoppingCartItem {
-	$key: string;
-	title: string;
-	imageUrl: string;
-	price: number;
+	id: string;
+	brandName: string;
+	imagePath: string;
+	actualPrice: number;
 	quantity: number;
+	type: string;
+	subType: string;
+	weight: number;
+	unitOfWeight: string;
 
 	constructor(init?: Partial<ShoppingCartItem>) {
 		Object.assign(this, init);
 	}
 
 	get totalPrice() {
-		return this.price * this.quantity;
+		return this.actualPrice * this.quantity;
 	}
 }

@@ -1,8 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
 import { User } from '../services/user';
-import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import firebase from 'firebase/compat/app';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -13,16 +16,19 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   userData: User// Save logged in user data
+  user$: Observable<firebase.User | null>
+
 
   constructor(
     public router: Router,
-    public ngZone: NgZone, // NgZone service to remove outside scope warning
     public afAuth: AngularFireAuth // Inject Firebase auth service
 
+
   ) {
-    /* Saving user data in localstorage when 
-    logged in and setting up null when logged out */
-    let anish = localStorage.getItem('anish')
+
+    this.user$ = afAuth.authState;
+
+    /**let anish = localStorage.getItem('anish')
     if (!anish) {
       this.afAuth.authState.subscribe((user) => {
         if (user) {
@@ -30,43 +36,28 @@ export class AuthService {
           //this.setUserData(user)
         }
       });
-    }
+    }*/
   }
 
   async signIn(email: string, password: string) {
-    try {
-      const result = await this.afAuth
-        .signInWithEmailAndPassword(email, password);
-      this.setUserData(result.user);
-      this.afAuth.authState.subscribe((user) => {
-        if (user) {
-          this.router.navigate(['dashboard']);
-        }
-      });
-    } catch (error) {
-      window.alert(JSON.stringify(error));
-    }
-  }
-
-  setUserData(user: any) {
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-    };
-
-    this.userData = userData
-
+    const result = await this.afAuth
+      .signInWithEmailAndPassword(email, password);
   }
 
 
-  getUserId(): string {
-    return localStorage.getItem('anish') as string
+
+  async registerNewUser(email: string, password: string) {
+    const result = await this.afAuth
+      .createUserWithEmailAndPassword(email, password);
   }
 
-  isLoggedIn() {
-    return localStorage.getItem('anish') !== undefined;
+  // https://www.techiediaries.com/angular-firebase/angular-9-firebase-authentication-email-google-and-password/
+  async sendPasswordResetEmail(passwordResetEmail: string) {
+    return await this.afAuth.sendPasswordResetEmail(passwordResetEmail);
+  }
+
+  async logout() {
+    this.afAuth.signOut();
+    //this.router.navigate(['grocery-list']);
   }
 }

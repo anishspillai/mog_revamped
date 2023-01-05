@@ -1,29 +1,93 @@
-<div class="container-fluid">
-  <table class="table table-striped">
-    <thead class="border-bottom border-3 border-secondary">
-      <tr *ngIf="!displayStockDecreamentOrIncreamentButton">
-        <th scope="col">Item</th>
-        <th scope="col">Item Details</th>
-        <th scope="col">Cost</th>
-      </tr>
-    </thead>
-    <tbody class="grocery-type-side-bar-text-font">
-      <tr class="align-items-center" *ngFor="let orderedItem of ordersAddedByUser">
+<hr class="linear-gradient-hr">
+<div *ngIf="cart$ | async as cart">
+  <div *ngIf="cart.items.length; else displayEmptyCartMessage" class="grocery-type-side-bar-text-font">
+    <div *ngIf="!isOrderPage()">
 
-        <td scope="row"><img src="../assets/img/hello.jpg" class="img-fluid  d-none d-lg-block" style="height: 50px; width: 50px;;">
-        </td>
+      <div *ngIf="cart.totalPrice > 499 else displayDeliveryCharge">
+        <small class="text-dark mx-2" style="text-shadow: 1px 1px 4px rgb(13, 177, 65);">This delivery is free of
+          delivery
+          charge</small>
+        <i class="bi bi-check2-square text-bg-success rounded fw-bolder"></i>
+      </div>
 
-        <td class="text-dark">{{orderedItem.groceryName}} {{orderedItem.type}} {{orderedItem.subType}} {{orderedItem.grossWeight}} {{orderedItem.unitOfWeight}}<span class="text-danger h6 px-1"> * </span> {{orderedItem.noOfItems}} packets
-        </td>
+      <ng-template #displayDeliveryCharge>
+        <small class="text-danger mx-2 ">This delivery needs delivery charge - Free
+          deivery from 500 Kr</small>
+        <i class="bi bi-info-circle text-danger"></i>
+      </ng-template>
 
-        <td *ngIf="displayStockDecreamentOrIncreamentButton">
-          <i class="bi bi-dash-square-fill h4 btn btn-danger responsive-font"></i>
-          <span class="mx-lg-2 font-bold-700-open-sans"> {{orderedItem.noOfItems}} </span>
-          <i class="bi bi-plus-square-fill h4 btn btn-success responsive-font"></i>
-        </td>
+      <div class="d-flex justify-content-around my-2">
 
-        <td class="text-dark "> {{orderedItem.actualPrice}} Kr</td>
-      </tr>
-    </tbody>
-  </table>
+        <a class="btn btn-dark btn-sm" (click)="moveToOrderPlacementPage(cart)">
+          <span>Proceed to checkout
+          </span>
+        </a>
+
+        <a class="btn btn-warning btn-sm" (click)="clearCart()">Empty Carts
+        </a>
+      </div>
+
+      <hr class="linear-gradient-hr my-2">
+    </div>
+
+    <div class="container-fluid">
+      <table class="table">
+        <thead *ngIf="isOrderPage()">
+          <th scope="col">Item</th>
+          <th scope="col">Item Details</th>
+          <th scope="col" class="float-end">Cost</th>
+        </thead>
+        <tbody>
+          <tr class="align-items-center" *ngFor="let orderedItem of cart.items">
+            <td scope="row"><img src="{{orderedItem.imagePath}}" class="img-fluid shadow-lg col-1"
+                style="height: 50px; width: 50px; border-radius: 25px;">
+            </td>
+
+            <td class="text-dark col-5">{{orderedItem.brandName}}, {{orderedItem.type}}, {{orderedItem.subType}},
+              ({{orderedItem.weight}} {{orderedItem.unitOfWeight}})<span class="text-danger h6 px-1"> * </span>
+              {{orderedItem.quantity}} packets
+            </td>
+
+            <td *ngIf="!isOrderPage()">
+              <div class="d-flex justify-content-between">
+                <i class="bi bi-dash-square-fill h4 btn btn-danger responsive-font"
+                  (click)="removeFromCart(orderedItem)"></i>
+                <span class="mx-2 font-bold-700-open-sans"> {{orderedItem.quantity}} </span>
+                <i class="bi bi-plus-square-fill h4 btn btn-success responsive-font"
+                  (click)="addToCart(orderedItem)"></i>
+              </div>
+            </td>
+
+            <td class="text-dark col-3">
+              <span class="float-end">{{orderedItem.totalPrice}} Kr</span>
+            </td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th></th>
+            <th></th>
+            <th *ngIf="!isOrderPage()"></th>
+            <th class="text-right">
+              <span class="float-end">{{ cart.totalPrice}} Kr</span>
+            </th>
+          </tr>
+          <tr *ngIf="cart.totalPrice < 500">
+            <th><small class="text-danger mx-2">Delivery</small></th>
+            <th></th>
+            <th *ngIf="!isOrderPage()"></th>
+            <th class="text-right">
+              <small class="float-end text-danger mx-2">50 Kr</small>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <ng-template #displayEmptyCartMessage>
+    <div class="d-flex my-5 justify-content-center">
+      <img src="assets/img/misc/sc_empty.jpg" class="img-fluid h-50 w-50">
+    </div>
+  </ng-template>
 </div>
