@@ -19,64 +19,62 @@ import { UserOrderHistoryComponent } from './user-components/user-order-history/
   { path: 'order-confirmation', component: OrderConfirmationComponent }
 ];*/
 const routes: Routes = [
-  {
-      path:'',
-      redirectTo: '/a/x',
-      pathMatch: 'full' 
-  },
-  {
-      path: 'a',
-      component: LandingPageComponent,
-      children:[
-          {
-              path:'',
-              redirectTo: '/x',
-              pathMatch: 'full' 
-          },
-          {
-              path:'x',
-              component: AllProductsSummaryComponent
-
-          },
-          {
-              path:'y',
-              component: GroceryGridPageComponent
-
-          },
-          { 
-              path: 'g',
-              component: UserContactParentComponent
-          },
-          { 
-              path: 'oh',
-              component: UserOrderHistoryComponent
-          },
-          { 
-              path: 'fa',
-              component: UserFavoriteItemsComponent
-          },
-          { 
-              path: 'search-result',
-              component: SearchComponentComponent
-          }
-      ]
-  },
-  { 
-      path: 'order',
-      component: OrderConfirmationComponent, canActivate: [AuthGuardService]
-  },
-  { 
-      path: 'login',
-      component: LoginPageComponent
-  },
-  { 
-      path: 'privacy',
-      component: PrivacyComponent
-  }
+    {
+        path: '',
+        redirectTo: '/a/x',
+        pathMatch: 'full'
+    },
+    {
+        path: 'a',
+        component: LandingPageComponent,
+        children: [
+            {
+                path: '',
+                redirectTo: '/x',
+                pathMatch: 'full'
+            },
+            {
+                path: 'x',
+                component: AllProductsSummaryComponent
+            },
+            {
+                path: 'y',
+                component: GroceryGridPageComponent
+            },
+            {
+                path: 'g',
+                component: UserContactParentComponent
+            },
+            {
+                path: 'oh',
+                component: UserOrderHistoryComponent
+            },
+            {
+                path: 'fa',
+                component: UserFavoriteItemsComponent
+            },
+            {
+                path: 'search-result',
+                component: SearchComponentComponent
+            }
+        ]
+    },
+    {
+        path: 'order',
+        component: OrderConfirmationComponent, canActivate: [AuthGuardService]
+    },
+    {
+        path: 'login',
+        component: LoginPageComponent
+    },
+    {
+        path: 'privacy',
+        component: PrivacyComponent
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

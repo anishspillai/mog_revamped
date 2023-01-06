@@ -1,12 +1,14 @@
-<div class=" d-block d-lg-none justify-content-center bg-dark m-2">
+<div class=" d-block d-lg-none justify-content-center bg-dark">
     <!--span class="text-white text-center p-5">Filter and sorting - Work In Progress</span-->
 </div>
 
 <div class="my-8 mt-1 d-none d-lg-block">
     <app-grocery-types-top-menu-bar></app-grocery-types-top-menu-bar>
 </div>
-
-<app-refinement></app-refinement>
+<div class="row col-lg-12">
+    <!--app-refinement></app-refinement-->
+    <app-sort [groceryInput]="groceryList" (newItemEvent)="groceryList=$event"></app-sort>
+</div>
 
 <div class="row m-lg-3">
 
@@ -27,7 +29,8 @@
                     </span>
                     <a (click)="navigateToTheGroceryItemClickedByUser(parentGroceryName, parentGroceryName, false, true)"
                         class="btn btn-sm" role="button">
-                        <span class="grocery-type-side-bar-text-font fw-bold p-1 rounded font-smaller text-white" style="background-color: brown">
+                        <span class="grocery-type-side-bar-text-font fw-bold p-1 rounded font-smaller text-white"
+                            style="background-color: rgb(137, 25, 115)">
                             Display all
                         </span>
                     </a>
@@ -53,17 +56,18 @@
 
         <hr class="linear-gradient-hr my-2">
 
-        <app-filter-by-brand [brandNamesWithCountMap]="brandNamesWithCountMap"></app-filter-by-brand>
+        <app-filter-by-brand [brandForFiltering]="brands" [groceryData]="intactedGroceryList"
+            (newItemEvent)="assignFilteredData($event)"></app-filter-by-brand>
 
         <hr class="linear-gradient-hr my-2">
 
-        <app-filter-by-price></app-filter-by-price>
+        <!--app-filter-by-price></app-filter-by-price-->
 
     </div>
 
     <div class="col-lg-10">
         <div class="container">
-            <div *ngIf="cart$ | async as cart" class="row row-cols-lg-5 row-cols-2 row-cols-md-3 mt-lg-5">
+            <div *ngIf="cart$ | async as cart" class="row row-cols-lg-5 row-cols-2 row-cols-md-3 mt-lg-2">
                 <div *ngFor="let grocery of groceryList | paginate: { itemsPerPage: 15, currentPage: pageNumber }">
                     <app-individual-grocery [individualGrocery]="grocery" [shopping-cart]="cart">
                     </app-individual-grocery>

@@ -1,0 +1,29 @@
+<!--div class="dropdown p-0 float-end grocery-type-side-bar-text-font">
+    <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Sort Fields
+    </a>
+
+    <ul class="dropdown-menu">
+        <li class="align-items-center" *ngFor="let sortField of sortValues">
+            <a class="dropdown-item" (click)="performSorting(sortField.code)">{{sortField.name}}</a>
+        </li>
+    </ul>
+</div-->
+
+
+<div class="d-flex d-none d-lg-block">
+    <div class="dropdown p-0 float-end grocery-type-side-bar-text-font">
+        <a class="btn btn-sm dropdown-toggle text-white" style="background-color: rgb(137, 25, 115)" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="bi bi-sort-up-alt"></i>  {{sortFieldHeader}} 
+        </a>
+
+        <ul class="dropdown-menu">
+            <li class="align-items-center" *ngFor="let sortField of sortValues">
+                <a class="dropdown-item" (click)="performSorting(sortField)">{{sortField.name}}</a>
+            </li>
+        </ul>
+
+    </div>
+</div>

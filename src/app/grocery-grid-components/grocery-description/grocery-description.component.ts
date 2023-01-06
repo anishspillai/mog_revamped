@@ -1,18 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { stringLength } from '@firebase/util';
-import { windowWhen } from 'rxjs';
-import { Order } from 'src/app/shared/model/order';
 import { ShoppingCart } from 'src/app/shared/model/shopping-cart';
 import { ShoppingcartService } from 'src/app/shared/observables/shoppingcart.service';
 import { IndividualGrocery } from 'src/app/shared/services/individual-grocery';
 
 @Component({
-  selector: 'app-individual-grocery',
-  templateUrl: './individual-grocery.component.html',
-  styleUrls: ['./individual-grocery.component.scss']
+  selector: 'app-grocery-description',
+  templateUrl: './grocery-description.component.html',
+  styleUrls: ['./grocery-description.component.scss']
 })
-export class IndividualGroceryComponent {
+export class GroceryDescriptionComponent {
+
 
   @Input() individualGrocery: IndividualGrocery
   @Input('shopping-cart') shoppingCart: ShoppingCart;
@@ -28,10 +25,4 @@ export class IndividualGroceryComponent {
     this.individualGrocery.stock && this.individualGrocery.stock > 0
   }
 
-  /**addToFavorite() {
-    let valueFromLocalStorage = localStorage.getItem('fav_item');
-    if(!valueFromLocalStorage) {
-      localStorage.setItem('fav_item', 'mog_vad_puthu')
-    }
-  }*/
 }

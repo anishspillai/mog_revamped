@@ -45,6 +45,8 @@ import { RefinementComponent } from './grocery-grid-components/refinement/refine
 import { FilterByBrandComponent } from './grocery-grid-components/filter-by-brand/filter-by-brand.component';
 import { FilterByPriceComponent } from './grocery-grid-components/filter-by-price/filter-by-price.component';
 import { TruncatePipe } from './shared/pipes/text-truncate';
+import { SortComponent } from './grocery-grid-components/sort/sort.component';
+import { GroceryDescriptionComponent } from './grocery-grid-components/grocery-description/grocery-description.component';
 
 
 
@@ -77,7 +79,9 @@ import { TruncatePipe } from './shared/pipes/text-truncate';
     RefinementComponent,
     FilterByBrandComponent,
     FilterByPriceComponent,
-    TruncatePipe
+    TruncatePipe,
+    SortComponent,
+    GroceryDescriptionComponent,
   ],
   imports: [
     BrowserModule,

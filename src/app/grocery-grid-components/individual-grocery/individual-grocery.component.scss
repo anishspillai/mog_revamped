@@ -101,3 +101,12 @@ input[type=checkbox]{
     width: 150px;
     height: 150px;
 }
+
+.btn-close {
+    transition: all 0.2s ease
+}
+
+.btn-close:hover {
+    transform: rotate(180deg);
+    /* Equal to rotateZ(45deg) */
+}

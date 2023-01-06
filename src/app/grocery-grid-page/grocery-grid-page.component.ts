@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ignoreElements, Observable } from 'rxjs';
+import { BrandForFiltering } from '../shared/model/BrandForFiltering';
 import { ShoppingCart } from '../shared/model/shopping-cart';
 import { ShoppingcartService } from '../shared/observables/shoppingcart.service';
 import { FirebasedbService } from '../shared/services/firebasedb.service';
@@ -30,7 +31,7 @@ export class GroceryGridPageComponent implements OnInit {
 
 
   productCategories: string[] = []
-  brandNamesWithCountMap: Map<string, number> = new Map();
+  brands: BrandForFiltering[] = []
   displayAll: boolean;
   subMenu: boolean;
 
@@ -49,17 +50,15 @@ export class GroceryGridPageComponent implements OnInit {
       this.groceryName = params.get("groceryType") as string
       this.displayAll = params.get("displayAll") === 'true'
       this.subMenu = params.get("subMenu") === 'true'
-
       this.fetchGroceries()
-
       this.fetchMenuForSideNavigation()
-
       this.cart$ = await this.cartService.getCart();
     })
 
   }
 
   fetchGroceries() {
+    window.scroll(0, 0)
     this.isAwaitingPageLoad = true
     this.groceryList = []
     this.intactedGroceryList = []
@@ -115,7 +114,6 @@ export class GroceryGridPageComponent implements OnInit {
   // I was using ahref for <a> tag for navigating to the specific grocery. But it was reloading the page always.
   // To stop that, I removed the ahref and added the router.navigate methoda
   navigateToTheGroceryItemClickedByUser(childName: string, parentName: string, clickedOnChildName: boolean, displayAllButtonClicked: boolean) {
-    console.log(clickedOnChildName, displayAllButtonClicked, childName, parentName)
     if (clickedOnChildName || displayAllButtonClicked) {
       this.router.navigate(['a/y'], {
         queryParams: {
@@ -132,13 +130,13 @@ export class GroceryGridPageComponent implements OnInit {
 
 
   private extractBrands() {
-    this.brandNamesWithCountMap = new Map()
+    this.brands = []
     this.intactedGroceryList.forEach(value => {
-      if (!this.brandNamesWithCountMap.has(value.brandName)) {
-        this.brandNamesWithCountMap.set(value.brandName, 1);
+      const brandAlreadyInFilter: BrandForFiltering | undefined = this.brands.find(val => val.brandName === value.brandName)
+      if (brandAlreadyInFilter) {
+        brandAlreadyInFilter.totalCount++
       } else {
-        //@ts-ignore
-        this.brandNamesWithCountMap.set(value.brandName, this.brandNamesWithCountMap.get(value.brandName) + 1)
+        this.brands.push(new BrandForFiltering(value.brandName))
       }
     }
     )
@@ -154,5 +152,14 @@ export class GroceryGridPageComponent implements OnInit {
     this.pageNumber = $event;
     window.scrollTo(scrollTo)
   }
-}
 
+  assignFilteredData($event: IndividualGrocery[]) {
+    this.pageNumber = 1
+    window.scroll(0, 0)
+    if ($event && $event.length > 0) {
+      this.groceryList = $event
+    } else {
+      this.groceryList = this.intactedGroceryList
+    }
+  }
+}

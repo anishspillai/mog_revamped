@@ -1,10 +1,10 @@
 <hr class="linear-gradient-hr">
 <div *ngIf="cart$ | async as cart">
-  <div *ngIf="cart.items.length; else displayEmptyCartMessage" class="grocery-type-side-bar-text-font">
+  <div *ngIf="cart.items.length; else displayEmptyCartMessage">
     <div *ngIf="!isOrderPage()">
 
       <div *ngIf="cart.totalPrice > 499 else displayDeliveryCharge">
-        <small class="text-dark mx-2" style="text-shadow: 1px 1px 4px rgb(13, 177, 65);">This delivery is free of
+        <small class="text-dark mx-2" style="text-shadow: 1px 1px 4px rgb(169, 236, 191);">This delivery is free of
           delivery
           charge</small>
         <i class="bi bi-check2-square text-bg-success rounded fw-bolder"></i>
@@ -18,12 +18,12 @@
 
       <div class="d-flex justify-content-around my-2">
 
-        <a class="btn btn-dark btn-sm" (click)="moveToOrderPlacementPage(cart)">
+        <a class="btn btn-sm text-white" style="background-color: rgb(106, 121, 6);" (click)="moveToOrderPlacementPage(cart)">
           <span>Proceed to checkout
           </span>
         </a>
 
-        <a class="btn btn-warning btn-sm" (click)="clearCart()">Empty Carts
+        <a class="btn btn-sm text-white" style="background-color: rgb(246, 89, 5);" (click)="clearCart()">Empty Carts
         </a>
       </div>
 

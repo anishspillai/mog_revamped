@@ -7,35 +7,36 @@
             <a href="#!"> <img src="{{individualGrocery.imagePath}}" alt="Missing Image"
                     class="mb-3 img-fluid img-size"></a>
             <div class="card-product-action">
-                <a href="#!" class="btn-action" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i
-                        class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true" title="Quick View"></i></a>
-                <a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true" title="Wishlist"><i
-                        class="bi bi-heart"></i></a>
-                <a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true" title="Compare"><i
-                        class="bi bi-arrow-left-right"></i></a>
+                <a class="btn-action" data-bs-toggle="offcanvas"
+                    [attr.data-bs-target]="'#collapse' + individualGrocery.id"
+                    aria-controls="offcanvasProductDescription"><i class="bi bi-eye" data-bs-toggle="tooltip"
+                        data-bs-html="true" title="Quick View"></i></a>
+                <!--a class="btn-action" title="Wishlist" (click)="addToFavorite()"><i
+                        class="bi bi-heart"></i></a-->
+                <!--a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true" title="Compare"><i
+                        class="bi bi-arrow-left-right"></i></a-->
             </div>
         </div>
-        <div class="text-small mb-1"><a href="#!"
+        <div class="text-small mb-1"><a
                 class="text-decoration-none text-muted"><small>{{individualGrocery.brandName}}</small></a></div>
-        <h2 class="fs-6"><a href="#!"
-                class="text-inherit text-dark  text-decoration-none">{{individualGrocery.type}}</a></h2>
-        <h2 class="fs-6"><a href="#!"
-                class="text-inherit text-dark  text-decoration-none">{{individualGrocery.weight}} {{individualGrocery.unitOfWeight}}</a></h2>
-        <div>
+        <h2 class="fs-6"> <a class="text-inherit text-dark  text-decoration-none">{{individualGrocery.type}}</a></h2>
+        <h2 class="fs-6"><a class="text-inherit text-dark  text-decoration-none">{{individualGrocery.weight}}
+                {{individualGrocery.unitOfWeight}}</a></h2>
+        <!--div>
             <small class="text-warning"> <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i></small> 
-                <!--span class="text-muted small">{{individualGrocery.actualPrice}}</span-->
-        </div>
+                <i class="bi bi-star-half"></i></small>
+            <span class="text-muted small">{{individualGrocery.actualPrice}}</span>
+        </div-->
 
         <div *ngIf="individualGrocery.offerPrice; else displayActualPrice"><span class="text-dark">Kr
                 {{individualGrocery.offerPrice}}</span> <span class="text-decoration-line-through text-muted">Kr
                 {{individualGrocery.actualPrice}}</span></div>
 
         <ng-template #displayActualPrice>
-            <span class="text-dark">Kr {{individualGrocery.actualPrice}}</span>
+            <span class="h5" style="color: rgb(171, 23, 48);">Kr {{individualGrocery.actualPrice}}</span>
         </ng-template>
 
 
@@ -53,5 +54,21 @@
             </ng-template>
         </div>
     </div>
+</div>
 
+
+
+
+<div class="offcanvas offcanvas-end grocery-type-side-bar-text-font" tabindex="-1"
+    [id]="'collapse' + individualGrocery.id" aria-labelledby="offcanvasProductDescriptionLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasProductDescriptionLabel">Product Description</h5>
+        <button type="button" class="btn-close  text-bg-danger text-reset" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <app-grocery-description [individualGrocery]="individualGrocery" [shopping-cart]="shoppingCart">
+        </app-grocery-description>
+    </div>
 </div>

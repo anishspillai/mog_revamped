@@ -1,17 +1,23 @@
+<div class="card border-0 grocery-type-side-bar-text-font">
+    <span class="font-bold-700-open-sans">Filter by Brand</span>
 
-
-        <div class="card border-0">
-            <span class="font-bold-700-open-sans">Filter by Brand</span> <span class="work-in-progress-text">Work In
-                Progress</span>
-
-            <span style="margin-left: 10px" *ngFor="let item of brandNamesWithCountMap | keyvalue">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                        (change)="addUserSelectedCheckBoxNameToChildView(item.key)">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        <span class="grocery-type-side-bar-text-font">{{item.key}} </span> <span
-                            class="badge bg-success">{{item.value}}</span>
-                    </label>
-                </div>
-            </span>
+    <span style="margin-left: 10px" *ngFor="let brand of brandForFiltering">
+        <!--div class="form-check">
+            <input class="form-check-input" type="checkbox" 
+                [(ngModel)]="selectedBrands"
+                (ngModelChange)="applyFilter()">
+            <label class="form-check-label" for="flexCheckDefault">
+                <span class="grocery-type-side-bar-text-font">{{item.key}} </span> <span
+                    class="badge bg-success">{{item.value}}</span>
+            </label>
+        </div-->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" [value]="brand.brandName" (change)="OnChange($event)"
+                [(ngModel)]="brand.checked" style="background-color: rgb(20, 19, 19)">
+            <label class="form-check-label" for="flexCheckDefault">
+                {{brand.brandName}} <span class="badge" style="background-color: rgb(118, 27, 157) ;">
+                    <small>{{brand.totalCount}}</small></span>
+            </label>
         </div>
+    </span>
+</div>
