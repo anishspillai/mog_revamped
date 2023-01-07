@@ -128,7 +128,7 @@
         <button type="button" class="btn btn-danger" (click)="logOut()"
           style="--bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .60rem;">
           Log Out</button>
-        <small class="grocery-type-side-bar-text-font text-white">{{user.uid | truncate:200}}</small>
+        <span class="grocery-type-side-bar-text-font text-white" style="font-size: small;">{{user.email | truncate:25}}</span>
       </a>
 
       <ng-template #displayLoginPromptItem>

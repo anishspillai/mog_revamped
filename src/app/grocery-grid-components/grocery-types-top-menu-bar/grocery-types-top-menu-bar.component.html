@@ -1,9 +1,9 @@
-<div class="container my-3 p-2 shadow-lg border-opacity-10 w-75 grocery-type-side-bar-text-font">
+<div class="container my-3 p-2 shadow-sm border-opacity-10 w-75 grocery-type-side-bar-text-font">
   <div class="collapse d-flex flex-lg-row justify-content-between ">
 
     <div class="nav-item dropdown" *ngFor="let item of menuItemsWithtSubItems">
       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="font-bold-700-open-sans">{{item.label}}</span>
+        <span>{{item.label}}</span>
       </a>
 
       <div class="dropdown-menu border-0">
@@ -22,7 +22,7 @@
 
     <div class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="font-bold-700-open-sans"> All Other Products </span>
+        <span> All Other Products </span>
       </a>
       <div class="dropdown-menu border-0">
         <div class="menu-bar-box rounded p-3" style="width: 300px;">

@@ -1,16 +1,30 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { IndexUiState } from 'instantsearch.js';
+import { Subscription } from 'rxjs';
+import { AddresscheckService } from 'src/app/shared/services/addresscheck.service';
 import { IndividualGrocery } from 'src/app/shared/services/individual-grocery';
+import { SortLabelChangeService } from 'src/app/shared/services/sort-label-change.service';
 
 @Component({
   selector: 'app-sort',
   templateUrl: './sort.component.html',
   styleUrls: ['./sort.component.scss']
 })
-export class SortComponent {
+export class SortComponent implements OnInit, OnDestroy {
 
   @Input() groceryInput: IndividualGrocery[]
   @Output() newItemEvent = new EventEmitter<IndividualGrocery[]>();
+  private sortLabeSubsription: Subscription;
+
+  constructor(private readonly addressChecker: SortLabelChangeService) {
+  }
+
+  ngOnInit(): void {
+    this.sortLabeSubsription = this.addressChecker.onLabelChange().subscribe((val) => {
+      this.sortFieldHeader = "Sort Fields"
+    })
+  }
+
 
   sortValues: SortValue[] = [{ name: 'Sort By Brand Type', code: 'brandName' },
   { name: 'Price: Low to High', code: 'lowPrice' },
@@ -38,8 +52,11 @@ export class SortComponent {
     }
     this.newItemEvent.emit(this.groceryInput)
   }
-}
 
+  ngOnDestroy() {
+    this.sortLabeSubsription.unsubscribe();
+  }
+}
 
 interface SortValue {
   name: string;

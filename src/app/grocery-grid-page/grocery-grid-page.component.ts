@@ -1,15 +1,30 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ignoreElements, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { BrandForFiltering } from '../shared/model/BrandForFiltering';
 import { ShoppingCart } from '../shared/model/shopping-cart';
 import { ShoppingcartService } from '../shared/observables/shoppingcart.service';
 import { FirebasedbService } from '../shared/services/firebasedb.service';
 import { IndividualGrocery } from '../shared/services/individual-grocery';
+import { trigger, transition, animate, style, state } from '@angular/animations';
+import { SortLabelChangeService } from '../shared/services/sort-label-change.service';
 @Component({
   selector: 'app-grocery-grid-page',
   templateUrl: './grocery-grid-page.component.html',
-  styleUrls: ['./grocery-grid-page.component.scss']
+  styleUrls: ['./grocery-grid-page.component.scss'],
+
+
+  /**animations: [
+    trigger('visibleGroceries', [
+      state('false', style({
+        backgroundColor: 'green'
+      })),
+      transition('true => false', [
+        animate('5000ms')
+      ]),
+    ])
+  ]*/
+
 })
 //https://www.youtube.com/watch?v=8jDKknEXh3g
 //https://therichpost.com/angular-14-bootstrap-5-grocery-ecommerce-store-free-template/
@@ -39,7 +54,8 @@ export class GroceryGridPageComponent implements OnInit {
     private activatedRouter: ActivatedRoute,
     private elementRef: ElementRef,
     private router: Router,
-    private readonly cartService: ShoppingcartService
+    private readonly cartService: ShoppingcartService,
+    private readonly sortLabelChangeService: SortLabelChangeService
   ) {
   }
 
@@ -63,7 +79,7 @@ export class GroceryGridPageComponent implements OnInit {
     this.groceryList = []
     this.intactedGroceryList = []
     this.pageNumber = 1
-
+    this.sortLabelChangeService.triggerSortEvent(true)
 
     this.db.getGroceriesList(this.subMenu, this.groceryName).subscribe(groceries => {
       groceries.forEach(grocerySnapshot => {

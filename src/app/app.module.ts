@@ -47,6 +47,7 @@ import { FilterByPriceComponent } from './grocery-grid-components/filter-by-pric
 import { TruncatePipe } from './shared/pipes/text-truncate';
 import { SortComponent } from './grocery-grid-components/sort/sort.component';
 import { GroceryDescriptionComponent } from './grocery-grid-components/grocery-description/grocery-description.component';
+import { SortLabelChangeService } from './shared/services/sort-label-change.service';
 
 
 
@@ -96,7 +97,7 @@ import { GroceryDescriptionComponent } from './grocery-grid-components/grocery-d
     BrowserAnimationsModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthService, FirebasedbService, AlertService, AddresscheckService, AuthGuardService],
+  providers: [AuthService, FirebasedbService, AlertService, AddresscheckService, AuthGuardService, SortLabelChangeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

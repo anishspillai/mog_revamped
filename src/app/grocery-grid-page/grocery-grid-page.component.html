@@ -10,7 +10,7 @@
     <app-sort [groceryInput]="groceryList" (newItemEvent)="groceryList=$event"></app-sort>
 </div>
 
-<div class="row m-lg-3">
+<div class="row m-lg-2">
 
     <div *ngIf="isAwaitingPageLoad" class="d-flex justify-content-center">
         <div class="row">
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div class="col-lg-2 my-8 mt-5 d-none d-lg-block">
+    <div class="col-lg-2 my-8 d-none d-lg-block">
         <div class="card border-0" id="category">
             <div class="card-subtitle mb-2 font-bold-700-open-sans h6">
                 <span *ngIf="parentGroceryName; else displayOthers">
@@ -65,7 +65,7 @@
 
     </div>
 
-    <div class="col-lg-10">
+    <div class="col-lg-10 mt-sm-1">
         <div class="container">
             <div *ngIf="cart$ | async as cart" class="row row-cols-lg-5 row-cols-2 row-cols-md-3 mt-lg-2">
                 <div *ngFor="let grocery of groceryList | paginate: { itemsPerPage: 15, currentPage: pageNumber }">
