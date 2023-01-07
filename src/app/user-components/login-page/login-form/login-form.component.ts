@@ -42,7 +42,7 @@ export class LoginFormComponent {
             Validators.required, Validators.minLength(6),
           ]
         ],
-        acceptTerms: [this.displayLogin ? true : false, Validators.requiredTrue]
+        acceptTerms: [true, Validators.requiredTrue]
       }
     );
   }
@@ -127,7 +127,7 @@ export class LoginFormComponent {
         } else if (message.includes("email-already-in-use")) {
           this.errorMessage = "The email id " + email + " is already in use. Please reset the password if you forgot the password. There is link available for password reset."
         } else {
-          this.errorMessage = "Unexpected error occured. Please try again! "+ serverLoginError.message
+          this.errorMessage = "Unexpected error occured. Please try again! " + serverLoginError.message
         }
       });
 
