@@ -70,7 +70,6 @@ export class GroceryGridPageComponent implements OnInit {
       this.fetchMenuForSideNavigation()
       this.cart$ = await this.cartService.getCart();
     })
-
   }
 
   fetchGroceries() {
