@@ -60,12 +60,14 @@
 </div>
 
 <div *ngIf="paginationConfigParameers.totalItems > 0" class="container">
-  <div class="card border rounded">
-    <span class="text-muted px-3">Total Hits found for - <strong class="text-dark">{{searchString}}:</strong></span>
-    <span class="text-secondary fw-bolder">{{paginationConfigParameers.totalItems}}
+  <div class="card border rounded grocery-type-side-bar-text-font">
+    <span class="text-dark px-3">Total Hits found for - <strong class="text-dark">{{searchString}}:</strong>
+      <span class="text-secondary fw-bolder mx-3">{{paginationConfigParameers.totalItems}}
+      </span>
     </span>
+
   </div>
-  <div  *ngIf="cart$ | async as cart" class="row row-cols-lg-5 row-cols-2 row-cols-md-3 mt-5">
+  <div *ngIf="cart$ | async as cart" class="row row-cols-lg-5 row-cols-2 row-cols-md-3 mt-5">
     <div *ngFor="let grocery of filteredGroceryList | paginate:  paginationConfigParameers" class="col">
       <app-individual-grocery [individualGrocery]="grocery" [shopping-cart]="cart"></app-individual-grocery>
     </div>
