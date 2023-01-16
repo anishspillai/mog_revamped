@@ -83,4 +83,15 @@ export class FirebasedbService {
   addUserDataToDb(userId: string, value: any) {
     return this.angularFireDataBase.object("/users/test/USERS/" + userId ).set(value)
   }
+
+  updateTheCountInDataBase(orderedGrocery: ShoppingCartItem): Promise<any> {
+    return this.angularFireDataBase.database.ref('admin/Products/' + orderedGrocery.id + '/stock').transaction((currentStock) => {
+      if (currentStock) {
+        const totalCount = currentStock - orderedGrocery.quantity
+        return totalCount > 0 ? totalCount : 0;
+      } else {
+        return 5
+      }
+    })
+  }
 }

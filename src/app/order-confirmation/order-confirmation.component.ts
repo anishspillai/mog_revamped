@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ShoppingCart } from '../shared/model/shopping-cart';
+import { ShoppingCartItem } from '../shared/model/shopping-cart-item';
 import { ShoppingcartService } from '../shared/observables/shoppingcart.service';
 import { AddresscheckService } from '../shared/services/addresscheck.service';
 import { AlertService } from '../shared/services/alert.service';
@@ -18,11 +19,10 @@ export class OrderConfirmationComponent implements OnInit, OnDestroy {
   price: number
   userSubscription: Subscription;
   userId: string | undefined;
-  cart$: Observable<ShoppingCart>;
   isAddressValid = false
   alertSubscription: Subscription;
   orderBeingPlaced = false;
-
+  items: ShoppingCartItem[] = [];
 
   constructor(private activatedRouter: ActivatedRoute,
     private authService: AuthService,
@@ -35,7 +35,9 @@ export class OrderConfirmationComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.userSubscription = this.authService.user$.subscribe(user => this.userId = user?.uid);
-    this.cart$ = await this.cartService.getCart();
+    (await this.cartService.getCart()).subscribe(val => {
+      this.items = val.items
+    });
     this.alertSubscription = this.addressChecker.onAddressChange().subscribe((val) => {
       this.isAddressValid = val
     })
@@ -50,22 +52,30 @@ export class OrderConfirmationComponent implements OnInit, OnDestroy {
     this.alertSubscription.unsubscribe()
   }
 
-  placeOrder() {
+  async placeOrder() {
     this.orderBeingPlaced = true
-    this.cart$.subscribe(async val => {
-      if (val.items.length > 0) {
-        let result = await this.db.placeOrder(this.userId, val.items);
-        this.cartService.clearCart();
-        localStorage.removeItem('cartId')
-        this.orderBeingPlaced = false
-        this.alertService.successAlert("Thank you placing the order!. Please check your order history for the details.")
-        this.router.navigate(['a/oh'])
-      }
-    })
+    let result = await this.db.placeOrder(this.userId, this.items);
+
+    try {
+      await this.updateCountOfGroceries()
+    } catch (err) {
+      // Log Error Here
+    }
+
+    this.cartService.clearCart();
+    localStorage.removeItem('cartId')
+    this.orderBeingPlaced = false
+    this.alertService.successAlert("Thank you placing the order!. Please check your order history for the details.")
+    this.router.navigate(['a/oh'])
   }
 
   setAddressInvalid($event: boolean) {
     this.isAddressValid = $event
   }
 
+  private async updateCountOfGroceries() {
+    this.items.forEach(orderedGrocery => {
+      this.db.updateTheCountInDataBase(orderedGrocery)
+    })
+  }
 }
