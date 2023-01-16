@@ -1,4 +1,4 @@
-<div class="d-flex flex-row justify-content-between align-items-center p-3  grocery-type-side-bar-text-font">
+<div class="d-flex flex-row justify-content-between align-items-center p-3 grocery-type-side-bar-text-font">
     <span class="text-info">Mall of Groceries</span>
 
     <a *ngIf="firebaseAuthObject.user | async as user; else displayLoginPromptItem"
@@ -38,7 +38,8 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <div *ngFor="let subItem of item.childItems" class="row p-1">
-                                    <a class="dropdown-item" data-bs-dismiss="offcanvas"
+                                    <a class="dropdown-item  grocery-type-side-bar-text-font"
+                                        data-bs-dismiss="offcanvas"
                                         (click)="navigateToThePage(item.label, subItem.label, true)"><span>
                                             {{subItem.label}}</span>
                                     </a>

@@ -65,7 +65,7 @@
 
     </div>
 
-    <div class="col-lg-10 mt-sm-1">
+    <div class="col-lg-10 mt-2">
         <div class="container">
             <div *ngIf="cart$ | async as cart" class="row row-cols-lg-5 row-cols-2 row-cols-md-3 mt-lg-2">
                 <div *ngFor="let grocery of groceryList | paginate: { itemsPerPage: 15, currentPage: pageNumber }">
