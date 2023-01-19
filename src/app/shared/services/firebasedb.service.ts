@@ -78,6 +78,7 @@ export class FirebasedbService {
     let orderPlacementTime: number = Date.now()
     let orderKey = userId as string + orderPlacementTime
     this.angularFireDataBase.object("/users/test/ORDER/" + orderKey).set({ userId, orderPlacementTime , order })
+    return orderKey
   }
 
   addUserDataToDb(userId: string, value: any) {

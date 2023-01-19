@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -30,7 +31,8 @@ export class OrderConfirmationComponent implements OnInit, OnDestroy {
     private db: FirebasedbService,
     private readonly addressChecker: AddresscheckService,
     private readonly alertService: AlertService,
-    private readonly router: Router) {
+    private readonly router: Router,
+    private readonly httpClient: HttpClient) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -78,4 +80,23 @@ export class OrderConfirmationComponent implements OnInit, OnDestroy {
       this.db.updateTheCountInDataBase(orderedGrocery)
     })
   }
+
+
+
+private sendOrderDetailsEmail(emailId: string, idToken: Promise<string | undefined> | undefined, orderId: any) {
+  idToken?.then(tokenId => {
+    const authenticationTokenHeader = new HttpHeaders({
+      Authorization: 'Bearer ' + tokenId
+    });
+
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("orderId", orderId).append("emailId", emailId);
+
+    //http://ec2-13-53-187-185.eu-north-1.compute.amazonaws.com:8080/order
+    this.httpClient.get("http://ec2-13-53-187-185.eu-north-1.compute.amazonaws.com:8080/order", {
+      headers: authenticationTokenHeader,
+      params: queryParams
+    }).subscribe(value => console.log())
+  })
+}
 }

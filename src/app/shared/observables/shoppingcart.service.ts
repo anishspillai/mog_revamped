@@ -64,6 +64,7 @@ export class ShoppingcartService {
     if (cartId) return cartId;
 
     let result = this.create();
+    window.alert("Coming here")
     localStorage.setItem('cartId', result.key || '{}');
     return result.key || ''
   }

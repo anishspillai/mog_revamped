@@ -35,9 +35,9 @@ export class LoginFormComponent {
   ngOnInit(): void {
     this.form = this.formBuilder.group(
       {
-        email: ['', [Validators.required, Validators.email]],
+        email: ['anishspillai@gmail.com', [Validators.required, Validators.email]],
         password: [
-          '',
+          'anishspillai',
           [
             Validators.required, Validators.minLength(6),
           ]

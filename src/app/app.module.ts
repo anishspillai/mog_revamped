@@ -48,6 +48,7 @@ import { TruncatePipe } from './shared/pipes/text-truncate';
 import { SortComponent } from './grocery-grid-components/sort/sort.component';
 import { GroceryDescriptionComponent } from './grocery-grid-components/grocery-description/grocery-description.component';
 import { SortLabelChangeService } from './shared/services/sort-label-change.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 
@@ -96,8 +97,9 @@ import { SortLabelChangeService } from './shared/services/sort-label-change.serv
     NgxPaginationModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [AuthService, FirebasedbService, AlertService, AddresscheckService, AuthGuardService, SortLabelChangeService],
+  providers: [HttpClient, AuthService, FirebasedbService, AlertService, AddresscheckService, AuthGuardService, SortLabelChangeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
