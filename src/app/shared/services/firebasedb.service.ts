@@ -71,18 +71,18 @@ export class FirebasedbService {
   }
 
   getItemFromCart(cartId: string, productId: string) {
-    return this.angularFireDataBase.object('/users/shopping-cart-anish/'+ cartId + "/" + productId);
+    return this.angularFireDataBase.object('/users/shopping-cart-anish/' + cartId + "/" + productId);
   }
 
   async placeOrder(userId: string | undefined, order: any) {
     let orderPlacementTime: number = Date.now()
     let orderKey = userId as string + orderPlacementTime
-    this.angularFireDataBase.object("/users/test/ORDER/" + orderKey).set({ userId, orderPlacementTime , order })
+    this.angularFireDataBase.object("/users/test/ORDER/" + orderKey).set({ userId, orderPlacementTime, order })
     return orderKey
   }
 
   addUserDataToDb(userId: string, value: any) {
-    return this.angularFireDataBase.object("/users/test/USERS/" + userId ).set(value)
+    return this.angularFireDataBase.object("/users/test/USERS/" + userId).set(value)
   }
 
   updateTheCountInDataBase(orderedGrocery: ShoppingCartItem): Promise<any> {
@@ -94,5 +94,10 @@ export class FirebasedbService {
         return 5
       }
     })
+  }
+
+  storeErrorDetails(userId: string | undefined, emailId: string | undefined, err: string, cartId: any) {
+    let errorData = { 'userId': userId, 'emailId': emailId, 'errorMessage': err, 'cartId' : cartId }
+    this.angularFireDataBase.object("/admin/error_logs/" + new Date()).set(errorData);
   }
 }

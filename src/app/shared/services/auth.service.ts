@@ -15,17 +15,13 @@ import firebase from 'firebase/compat/app';
 
 export class AuthService {
 
-  userData: User// Save logged in user data
   user$: Observable<firebase.User | null>
 
 
   constructor(
     public router: Router,
     public afAuth: AngularFireAuth // Inject Firebase auth service
-
-
   ) {
-
     this.user$ = afAuth.authState;
 
     /**let anish = localStorage.getItem('anish')
@@ -60,4 +56,9 @@ export class AuthService {
     this.afAuth.signOut();
     //this.router.navigate(['grocery-list']);
   }
+
+  getCurrentUser() {
+    return firebase.auth().currentUser?.getIdToken(true)
+  }
+
 }
